@@ -1,0 +1,7 @@
+{
+  "name": "CompraCercaFrontEnd",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
