@@ -22,4 +22,10 @@
     <ProjectReference Include="..\CompraCerca.ServiceFactory\CompraCerca.ServiceFactory.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DomainTests\" />
+    <Folder Include="BusinessLogic\" />
+    <Folder Include="DataAccessTests\" />
+  </ItemGroup>
+
 </Project>
