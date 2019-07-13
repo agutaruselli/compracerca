@@ -18,7 +18,7 @@
     <ProjectReference Include="..\CompraCerca.DataAccess.Interface\CompraCerca.DataAccess.Interface.csproj" />
     <ProjectReference Include="..\CompraCerca.DataAccess\CompraCerca.DataAccess.csproj" />
     <ProjectReference Include="..\CompraCerca.Domain\CompraCerca.Domain.csproj" />
-    <ProjectReference Include="..\CompraCerca.Exception\CompraCerca.Exception.csproj" />
+    <ProjectReference Include="..\CompraCerca.Exception\CompraCerca.Exceptions.csproj" />
     <ProjectReference Include="..\CompraCerca.ServiceFactory\CompraCerca.ServiceFactory.csproj" />
   </ItemGroup>
 

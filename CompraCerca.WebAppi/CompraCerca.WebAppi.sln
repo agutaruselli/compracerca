@@ -3,23 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.WebAppi", "CompraCerca.WebAppi\CompraCerca.WebAppi.csproj", "{422CC398-1665-4ADC-BD26-7EB280426666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.WebAppi", "CompraCerca.WebAppi\CompraCerca.WebAppi.csproj", "{422CC398-1665-4ADC-BD26-7EB280426666}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.BusinessLogic", "CompraCerca.BusinessLogic\CompraCerca.BusinessLogic.csproj", "{24CBC5BC-05E3-42CA-8B84-45A233FBEA91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.BusinessLogic", "CompraCerca.BusinessLogic\CompraCerca.BusinessLogic.csproj", "{24CBC5BC-05E3-42CA-8B84-45A233FBEA91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.BusinessLogic.Interface", "CompraCerca.BusinessLogic.Interface\CompraCerca.BusinessLogic.Interface.csproj", "{19A5AF0E-DD07-46C0-A1A5-997A578EF777}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.BusinessLogic.Interface", "CompraCerca.BusinessLogic.Interface\CompraCerca.BusinessLogic.Interface.csproj", "{19A5AF0E-DD07-46C0-A1A5-997A578EF777}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.DataAccess", "CompraCerca.DataAccess\CompraCerca.DataAccess.csproj", "{2D6E5513-83CA-4964-A114-560C57599E63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.DataAccess", "CompraCerca.DataAccess\CompraCerca.DataAccess.csproj", "{2D6E5513-83CA-4964-A114-560C57599E63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.DataAccess.Interface", "CompraCerca.DataAccess.Interface\CompraCerca.DataAccess.Interface.csproj", "{3ABD5776-0F11-4587-BF06-D112CE866443}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.DataAccess.Interface", "CompraCerca.DataAccess.Interface\CompraCerca.DataAccess.Interface.csproj", "{3ABD5776-0F11-4587-BF06-D112CE866443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.Domain", "CompraCerca.Domain\CompraCerca.Domain.csproj", "{D668F8EA-8C97-41B3-8599-3CE8576D234E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.Domain", "CompraCerca.Domain\CompraCerca.Domain.csproj", "{D668F8EA-8C97-41B3-8599-3CE8576D234E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.Exception", "CompraCerca.Exception\CompraCerca.Exception.csproj", "{69B1F55F-2E84-466D-8045-5A42A3ED6886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.Exceptions", "CompraCerca.Exception\CompraCerca.Exceptions.csproj", "{69B1F55F-2E84-466D-8045-5A42A3ED6886}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.ServiceFactory", "CompraCerca.ServiceFactory\CompraCerca.ServiceFactory.csproj", "{8DC8821F-F147-4A62-9F9E-919E730B011C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.ServiceFactory", "CompraCerca.ServiceFactory\CompraCerca.ServiceFactory.csproj", "{8DC8821F-F147-4A62-9F9E-919E730B011C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.Tests", "CompraCerca.Tests\CompraCerca.Tests.csproj", "{E64EDDAA-D862-44FD-8812-6B40903E5D52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.Tests", "CompraCerca.Tests\CompraCerca.Tests.csproj", "{E64EDDAA-D862-44FD-8812-6B40903E5D52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
