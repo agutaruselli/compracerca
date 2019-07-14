@@ -80,7 +80,7 @@ export class HomePage {
 
 
   enableMap() {
-    //console.log('enable map');
+    console.log('enable map');
   }
 
   limpiarMapa() {
@@ -109,17 +109,27 @@ export class HomePage {
     const service = new google.maps.places.PlacesService(this.map);
     service.textSearch(request, (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (let i = 0; i < results.length; i++) {
-                const place = results[i];
-                const marker = new google.maps.Marker({
-                 position: place.geometry.location,
-                 map: this.map
-                });
-                this.markers.push(marker);
-        }
+            for (const result of results) {
+                const place = result;
+                //
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+
+                const coordenadas = new google.maps.LatLng(lat, lng);
+                if(this.cityCircle.getBounds().contains(coordenadas)
+                  && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas) 
+                    <= this.cityCircle.getRadius()) {
+                      const marker = new google.maps.Marker({
+                      position: place.geometry.location,
+                      map: this.map
+                      });
+                      this.markers.push(marker);
+                }
+            }
       }
     }
-    ); 
+    );
+
     /*
     this.placesService.getDetails({placeId: place.place_id}, (details) => {
 

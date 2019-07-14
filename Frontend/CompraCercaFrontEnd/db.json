@@ -1,0 +1,25 @@
+{
+  "posts": [
+    {
+     "lat": -34.862603,
+     "lng": -56.171718,
+     "image": "",
+     "name": "Lugar mock 1",
+     "adress": "Amazonas 1580"
+    },
+    {
+      "lat": -34.861127,
+      "lng": -56.173792,
+      "image": "",
+      "name": "Lugar mock 2",
+      "adress": "Amazonas 1580"
+     },
+     {
+      "lat": -34.859508,
+      "lng": -56.177891,
+      "image": "",
+      "name": "Lugar mock 3",
+      "adress": "Amazonas 1580"
+     }
+  ]
+}

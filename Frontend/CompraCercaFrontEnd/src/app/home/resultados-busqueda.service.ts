@@ -15,8 +15,8 @@ export interface ItemResponse {
 })
 export class ResultadosBusquedaService {
 
-  BASE_URL  = 'https://unidosmexico85.firebaseio.com';
-  LOCATIONS_URL = '/locations.json';
+  BASE_URL  = 'localhost:3000';
+  LOCATIONS_URL = '/posts';
 
   constructor(private http: HttpClient) {
 
