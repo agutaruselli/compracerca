@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/throw';
 
 export interface ItemResponse {
   lat: number;
@@ -25,4 +27,8 @@ export class ResultadosBusquedaService {
   getLocations(): Observable<ItemResponse[]> {
       return this.http.get<ItemResponse[]>(this.BASE_URL + this.LOCATIONS_URL);
   }
+
+
+
+  
 }

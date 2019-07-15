@@ -1,7 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy  } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResultadosBusquedaService } from './resultados-busqueda.service';
 import { ItemResponse } from './resultados-busqueda.service';
+import 'rxjs/add/operator/map';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 
 @Component({
@@ -9,7 +13,8 @@ import { ItemResponse } from './resultados-busqueda.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnDestroy {
+
   @ViewChild('map') mapElement: ElementRef;
   latitude: number;
   longitude: number;
@@ -22,24 +27,22 @@ export class HomePage {
   location: any;
   puntero: google.maps.LatLng;
   markers: google.maps.Marker [] = [];
-  customMarkers: Observable <ItemResponse[]> ;
+  customMarkers: google.maps.Marker [] = [];
+
+  respuestasCompraCerca: ItemResponse[] ;
   cityCircle: google.maps.Circle;
+  private unsubscribe$: Subject<any> = new Subject<any>();
+
 
   constructor(private resultadosBusquedaService: ResultadosBusquedaService) {
     this.searchDisabled = true;
     this.saveDisabled = true;
     this.initMap();
   }
-  ionViewDidLoad(): void {
-   /*
-    let mapLoaded = this.map.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
 
-        //.autocompleteService = new google.maps.places.AutocompleteService();
-        this.placesService = new google.maps.places.PlacesService(this.map);
-        this.searchDisabled = false;
-
-    });
-    */
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   initMap() {
@@ -89,11 +92,22 @@ export class HomePage {
       this.markers[i].setMap(null);
       this.markers[i] = null;
     }
+    for (let i = 0 ; i < this.customMarkers.length; i++) {
+
+      this.customMarkers[i].setMap(null);
+      this.customMarkers[i] = null;
+    }
     this.markers = [];
+    this.customMarkers = [];
   }
 
   getLocations() {
-    this.customMarkers = this.resultadosBusquedaService.getLocations();
+   // this.resultadosBusquedaService.getLocations().subscribe(data => this.customMarkers = data);
+       this.resultadosBusquedaService.getLocations().pipe(
+         takeUntil(this.unsubscribe$)
+       )
+       .subscribe(data => this.respuestasCompraCerca = data);
+
   }
 
   searchText(textoLupa) {
@@ -109,6 +123,20 @@ export class HomePage {
     const service = new google.maps.places.PlacesService(this.map);
     service.textSearch(request, (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
+            this.getLocations();
+            for (const item of this.respuestasCompraCerca) {
+              const coordenadasCustom = new google.maps.LatLng(item.lat, item.lng);
+              if (this.cityCircle.getBounds().contains(coordenadasCustom)
+              && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadasCustom)
+                <= this.cityCircle.getRadius()) {
+                  const marker = new google.maps.Marker({
+                    position: coordenadasCustom,
+                    map: this.map
+                    });
+                  this.customMarkers.push(marker);
+
+                }
+            }
             for (const result of results) {
                 const place = result;
                 //
@@ -116,8 +144,8 @@ export class HomePage {
                 const lng = place.geometry.location.lng();
 
                 const coordenadas = new google.maps.LatLng(lat, lng);
-                if(this.cityCircle.getBounds().contains(coordenadas)
-                  && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas) 
+                if (this.cityCircle.getBounds().contains(coordenadas)
+                  && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas)
                     <= this.cityCircle.getRadius()) {
                       const marker = new google.maps.Marker({
                       position: place.geometry.location,
