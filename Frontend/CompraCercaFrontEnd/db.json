@@ -1,25 +1,25 @@
 {
-  "posts": [
+"posts": [
     {
-     "lat": -34.862603,
-     "lng": -56.171718,
-     "image": "",
+     "lat": 1,
+     "lng": 2,
+     "image": "one",
      "name": "Lugar mock 1",
      "adress": "Amazonas 1580"
     },
     {
-      "lat": -34.861127,
-      "lng": -56.173792,
-      "image": "",
+      "lat": 2,
+      "lng": 3,
+      "image": "two",
       "name": "Lugar mock 2",
       "adress": "Amazonas 1580"
      },
      {
-      "lat": -34.859508,
-      "lng": -56.177891,
-      "image": "",
+      "lat": 4,
+      "lng": 4,
+      "image": "three",
       "name": "Lugar mock 3",
       "adress": "Amazonas 1580"
-     }
-  ]
+  	}
+]
 }

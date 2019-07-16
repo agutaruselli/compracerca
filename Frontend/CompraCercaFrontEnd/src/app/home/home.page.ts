@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy  } from '@angular/c
 import { Observable } from 'rxjs';
 import { ResultadosBusquedaService } from './resultados-busqueda.service';
 import { ItemResponse } from './resultados-busqueda.service';
-import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -28,8 +27,12 @@ export class HomePage implements OnDestroy {
   puntero: google.maps.LatLng;
   markers: google.maps.Marker [] = [];
   customMarkers: google.maps.Marker [] = [];
+  iconoCustomMarkers = {
+    url: 'assets/icon/marcadores_compraCerca.svg',
+    scaledSize: new google.maps.Size(30, 30)
+   };
 
-  respuestasCompraCerca: ItemResponse[] ;
+  respuestasCompraCerca: ItemResponse[] =  [];
   cityCircle: google.maps.Circle;
   private unsubscribe$: Subject<any> = new Subject<any>();
 
@@ -77,6 +80,7 @@ export class HomePage implements OnDestroy {
         center: pos,
         radius: 3000
        });
+      this.map.fitBounds(this.cityCircle.getBounds());
 
   });
  }
@@ -102,12 +106,11 @@ export class HomePage implements OnDestroy {
   }
 
   getLocations() {
-   // this.resultadosBusquedaService.getLocations().subscribe(data => this.customMarkers = data);
-       this.resultadosBusquedaService.getLocations().pipe(
-         takeUntil(this.unsubscribe$)
-       )
-       .subscribe(data => this.respuestasCompraCerca = data);
 
+       this.resultadosBusquedaService.getLocations().subscribe( (res: ItemResponse[]) => {
+        this.respuestasCompraCerca = res;
+        console.log(res);
+      });
   }
 
   searchText(textoLupa) {
@@ -131,10 +134,10 @@ export class HomePage implements OnDestroy {
                 <= this.cityCircle.getRadius()) {
                   const marker = new google.maps.Marker({
                     position: coordenadasCustom,
-                    map: this.map
+                    map: this.map,
+                    icon: this.iconoCustomMarkers
                     });
                   this.customMarkers.push(marker);
-
                 }
             }
             for (const result of results) {
