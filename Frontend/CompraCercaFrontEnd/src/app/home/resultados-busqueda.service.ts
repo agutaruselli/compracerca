@@ -28,7 +28,6 @@ export class ResultadosBusquedaService {
       return this.http.get<ItemResponse[]>(this.BASE_URL + this.LOCATIONS_URL).pipe(
         catchError(this.handleError)
       );
-        //return this.http.get<ItemResponse[]>('localhost:3000/posts');
 
   }
 
