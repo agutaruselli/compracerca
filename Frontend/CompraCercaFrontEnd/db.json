@@ -21,5 +21,23 @@
       "name": "Lugar mock 3",
       "adress": "Amazonas 1580"
   	}
+],
+
+"categories": [
+  {
+   "father": 1,
+   "id": 2,
+   "name": "one"
+  },
+  {
+   "father": 1,
+   "id": 2,
+   "name": "one"
+   },
+   {
+    "father": 1,
+    "id": 2,
+    "name": "one"
+  }
 ]
 }
