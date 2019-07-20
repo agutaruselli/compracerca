@@ -15,7 +15,18 @@ const routes: Routes = [
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
   },
-  { path: 'categories', loadChildren: './categories/categories.module#CategoriesPageModule' }
+  { path: 'categories',
+      children : [
+        {
+        path: '',
+        loadChildren: './categories/categories.module#CategoriesPageModule'
+        },
+        {
+        path: ':categoryID',
+        loadChildren: './categories/child-categories/child-categories.module#ChildCategoriesPageModule'
+        }
+      ]
+  }
 ];
 
 @NgModule({

@@ -25,19 +25,39 @@
 
 "categories": [
   {
-   "father": 1,
-   "id": 2,
-   "name": "one"
+   "father": null,
+   "id": 1,
+   "name": "one",
+   "childs": [
+     {
+      "father": 1,
+      "id": 4,
+      "name": "four",
+      "childs": null
+     },
+     {
+      "father": 1,
+      "id": 5,
+      "name": "five",
+      "childs": null
+     },
+     {
+      "father": 1,
+      "id": 5,
+      "name": "five",
+      "childs": null
+     }
+    ]
   },
   {
-   "father": 1,
+   "father": null,
    "id": 2,
-   "name": "one"
+   "name": "two"
    },
    {
-    "father": 1,
-    "id": 2,
-    "name": "one"
+    "father": null,
+    "id": 3,
+    "name": "three"
   }
 ]
 }

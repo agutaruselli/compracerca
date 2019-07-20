@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
@@ -8,7 +8,6 @@ export interface CategoryResponse {
   father: number;
   id: number;
   name: string;
-
 }
 
 
@@ -18,18 +17,27 @@ export interface CategoryResponse {
 export class CategoriesService {
 
   BASE_URL  = 'http://localhost:3000';
-  LOCATIONS_URL = '/categories';
+  CATEGORIES_URL = '/categories';
+
 
   constructor(private http: HttpClient) {
 
   }
 
   getFatherCategories(): Observable<CategoryResponse[]> {
-      return this.http.get<CategoryResponse[]>(this.BASE_URL + this.LOCATIONS_URL).pipe(
+      return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
         catchError(this.handleError)
       );
 
   }
+  getChildCategories(categoryID: string): Observable<CategoryResponse[]> {
+    const params = new HttpParams();
+    params.set('fatherID', categoryID.toString());
+    return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL, {params}).pipe(
+      catchError(this.handleError)
+    );
+
+}
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
