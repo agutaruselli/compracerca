@@ -24,6 +24,13 @@ export class CategoriesService {
 
   }
 
+  getCategoryInfo(categoryID: string): Observable<CategoryResponse> {
+    return this.http.get<CategoryResponse>(this.BASE_URL + this.CATEGORIES_URL + '/' +  categoryID).pipe(
+      catchError(this.handleError)
+    );
+
+  }
+
   getFatherCategories(): Observable<CategoryResponse[]> {
       return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
         catchError(this.handleError)

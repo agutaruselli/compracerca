@@ -10,6 +10,7 @@ import { CategoryResponse } from '../categories.service';
 })
 export class ChildCategoriesPage implements OnInit {
   childCategories: CategoryResponse[] = [];
+  parentCategory: CategoryResponse = { father: null, id: null , name: null };
 
   constructor(private activatedRoute: ActivatedRoute, private categoriesService: CategoriesService) { }
 
@@ -19,6 +20,11 @@ export class ChildCategoriesPage implements OnInit {
             return;
         }
         const categoryID = paramMap.get('categoryID');
+        this.categoriesService.getCategoryInfo(categoryID).subscribe( (res: CategoryResponse) => {
+          this.parentCategory = res;
+          console.log(res);
+        });
+
         this.categoriesService.getChildCategories(categoryID).subscribe( (res: CategoryResponse[]) => {
           this.childCategories = res;
           console.log(res);
