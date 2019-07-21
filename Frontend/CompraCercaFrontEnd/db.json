@@ -27,24 +27,24 @@
   {
    "father": null,
    "id": 1,
-   "name": "one",
+   "name": "Automoviles",
    "childs": [
      {
       "father": 1,
       "id": 4,
-      "name": "four",
+      "name": "Audio y video",
       "childs": null
      },
      {
       "father": 1,
       "id": 5,
-      "name": "five",
+      "name": "Chasis",
       "childs": null
      },
      {
       "father": 1,
       "id": 5,
-      "name": "five",
+      "name": "Chapa y pintura",
       "childs": null
      }
     ]
@@ -52,12 +52,12 @@
   {
    "father": null,
    "id": 2,
-   "name": "two"
+   "name": "Electrodomesticos"
    },
    {
     "father": null,
     "id": 3,
-    "name": "three"
+    "name": "Restaurantes"
   }
 ]
 }

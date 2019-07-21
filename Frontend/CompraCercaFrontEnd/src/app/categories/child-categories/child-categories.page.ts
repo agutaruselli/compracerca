@@ -31,5 +31,8 @@ export class ChildCategoriesPage implements OnInit {
         });
       });
   }
+  childCategoryClick() {
+    
+  }
 
 }

@@ -3,7 +3,12 @@ import { Observable } from 'rxjs';
 import { ResultadosBusquedaService } from './resultados-busqueda.service';
 import { ItemResponse } from './resultados-busqueda.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { CategoriesService } from '../categories/categories.service';
+import { CategoryResponse } from '../categories/categories.service';
+
+
+
 
 
 
@@ -12,7 +17,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnDestroy {
+export class HomePage implements OnDestroy, OnInit {
 
   @ViewChild('map') mapElement: ElementRef;
   latitude: number;
@@ -24,7 +29,8 @@ export class HomePage implements OnDestroy {
   searchDisabled: boolean;
   saveDisabled: boolean;
   location: any;
-  puntero: google.maps.LatLng;
+  categorySearch: CategoryResponse = { father: null, id: null , name: null };
+  puntero: google.maps.LatLng = new google.maps.LatLng(0, 0) ;
   markers: google.maps.Marker [] = [];
   customMarkers: google.maps.Marker [] = [];
   iconoCustomMarkers = {
@@ -33,14 +39,21 @@ export class HomePage implements OnDestroy {
    };
 
   respuestasCompraCerca: ItemResponse[] =  [];
-  cityCircle: google.maps.Circle;
+  cityCircle: google.maps.Circle = new google.maps.Circle({
+    center: this.puntero,
+    radius: 3000
+   });
   private unsubscribe$: Subject<any> = new Subject<any>();
 
 
-  constructor(private resultadosBusquedaService: ResultadosBusquedaService) {
+  constructor(private resultadosBusquedaService: ResultadosBusquedaService, private activatedRoute: ActivatedRoute, 
+              private categoriesService: CategoriesService) {
     this.searchDisabled = true;
     this.saveDisabled = true;
+  }
+  ngOnInit()  {
     this.initMap();
+   
   }
 
   ngOnDestroy() {
@@ -81,6 +94,17 @@ export class HomePage implements OnDestroy {
         radius: 3000
        });
       this.map.fitBounds(this.cityCircle.getBounds());
+      this.activatedRoute.paramMap.subscribe(paramMap => {
+        if (!paramMap.has('categoryID'))  {
+            return;
+        }
+        const categoryID = paramMap.get('categoryID');
+        this.categoriesService.getCategoryInfo(categoryID).subscribe( (res: CategoryResponse) => {
+          this.categorySearch = res;
+          console.log(res);
+          this.searchCategory(this.categorySearch.name);
+        });
+      });
 
   });
  }
@@ -105,11 +129,24 @@ export class HomePage implements OnDestroy {
     this.customMarkers = [];
   }
 
-  getLocations() {
+  getLocations(textSearch: string) {
 
-       this.resultadosBusquedaService.getLocations().subscribe( (res: ItemResponse[]) => {
+       this.resultadosBusquedaService.getLocations(textSearch).subscribe( (res: ItemResponse[]) => {
         this.respuestasCompraCerca = res;
         console.log(res);
+        for (const item of this.respuestasCompraCerca) {
+          const coordenadasCustom = new google.maps.LatLng(item.lat, item.lng);
+          if (this.cityCircle.getBounds().contains(coordenadasCustom)
+          && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadasCustom)
+            <= this.cityCircle.getRadius()) {
+              const marker = new google.maps.Marker({
+                position: coordenadasCustom,
+                map: this.map,
+                icon: this.iconoCustomMarkers
+                });
+              this.customMarkers.push(marker);
+            }
+        }
       });
   }
 
@@ -126,20 +163,7 @@ export class HomePage implements OnDestroy {
     const service = new google.maps.places.PlacesService(this.map);
     service.textSearch(request, (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
-            this.getLocations();
-            for (const item of this.respuestasCompraCerca) {
-              const coordenadasCustom = new google.maps.LatLng(item.lat, item.lng);
-              if (this.cityCircle.getBounds().contains(coordenadasCustom)
-              && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadasCustom)
-                <= this.cityCircle.getRadius()) {
-                  const marker = new google.maps.Marker({
-                    position: coordenadasCustom,
-                    map: this.map,
-                    icon: this.iconoCustomMarkers
-                    });
-                  this.customMarkers.push(marker);
-                }
-            }
+            this.getLocations(textoLupa.target.value);
             for (const result of results) {
                 const place = result;
                 //
@@ -160,23 +184,40 @@ export class HomePage implements OnDestroy {
       }
     }
     );
+}
 
-    /*
-    this.placesService.getDetails({placeId: place.place_id}, (details) => {
+searchCategory(categoryName: string) {
+  this.limpiarMapa();
+  this.places = [];
+  const request = {
+    location: this.puntero,
+    radius: 5,
+    query: categoryName
+    };
+  this.getLocations(categoryName);
+  const service = new google.maps.places.PlacesService(this.map);
+  service.textSearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (const result of results) {
+              const place = result;
+              //
+              const lat = place.geometry.location.lat();
+              const lng = place.geometry.location.lng();
 
-            location.name = details.name;
-            location.lat = details.geometry.location.lat();
-            location.lng = details.geometry.location.lng();
-            this.saveDisabled = false;
-
-            this.maps.map.setCenter({lat: location.lat, lng: location.lng}); 
-
-            this.location = location;
-
-        });
-
-    });*/
-
+              const coordenadas = new google.maps.LatLng(lat, lng);
+              if (this.cityCircle.getBounds().contains(coordenadas)
+                && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas)
+                  <= this.cityCircle.getRadius()) {
+                    const marker = new google.maps.Marker({
+                    position: place.geometry.location,
+                    map: this.map
+                    });
+                    this.markers.push(marker);
+              }
+          }
+    }
+  }
+  );
 }
 /*
 searchPlace(){

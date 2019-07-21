@@ -24,7 +24,7 @@ export class ResultadosBusquedaService {
 
   }
 
-  getLocations(): Observable<ItemResponse[]> {
+  getLocations(textSearch: string): Observable<ItemResponse[]> {
       return this.http.get<ItemResponse[]>(this.BASE_URL + this.LOCATIONS_URL).pipe(
         catchError(this.handleError)
       );
