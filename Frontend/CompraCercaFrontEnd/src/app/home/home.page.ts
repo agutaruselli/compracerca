@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 
@@ -37,7 +38,7 @@ export class HomePage implements OnDestroy, OnInit {
     url: 'assets/icon/marcadores_compraCerca.svg',
     scaledSize: new google.maps.Size(30, 30)
    };
-
+   infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
   respuestasCompraCerca: ItemResponse[] =  [];
   cityCircle: google.maps.Circle = new google.maps.Circle({
     center: this.puntero,
@@ -53,7 +54,6 @@ export class HomePage implements OnDestroy, OnInit {
   }
   ngOnInit()  {
     this.initMap();
-   
   }
 
   ngOnDestroy() {
@@ -82,7 +82,6 @@ export class HomePage implements OnDestroy, OnInit {
           map: this.map,
           icon: icono
        });
-
       this.cityCircle = new google.maps.Circle({
         strokeColor: '#FF0000',
         strokeOpacity: 0.8,
@@ -208,16 +207,32 @@ searchCategory(categoryName: string) {
               if (this.cityCircle.getBounds().contains(coordenadas)
                 && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas)
                   <= this.cityCircle.getRadius()) {
+                    /*
                     const marker = new google.maps.Marker({
                     position: place.geometry.location,
                     map: this.map
                     });
-                    this.markers.push(marker);
+                    this.markers.push(marker);*/
+                    this.addMarker(place);
               }
           }
     }
   }
   );
+}
+addMarker(place: google.maps.places.PlaceResult) {
+  const marker = new google.maps.Marker({
+    position: place.geometry.location,
+    map: this.map,
+    label: place.name,
+    });
+  this.markers.push(marker);
+  google.maps.event.addListener(marker, 'click', () => {
+    this.infoWindow.setContent('<p>' + place.name + '</p>' +
+    '<img src="' + place.icon + '" </img>');
+    this.infoWindow.close();
+    this.infoWindow.open(this.map, marker);
+  });
 }
 /*
 searchPlace(){
