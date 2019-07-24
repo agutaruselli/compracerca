@@ -6,11 +6,8 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
-import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
-
-
-
-
+import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
+declare var MarkerClusterer: any;
 
 
 @Component({
@@ -44,6 +41,9 @@ export class HomePage implements OnDestroy, OnInit {
     center: this.puntero,
     radius: 3000
    });
+   markerClusterer: any;
+   zindex = 0;
+   zoomLevel = 0;
   private unsubscribe$: Subject<any> = new Subject<any>();
 
 
@@ -93,6 +93,8 @@ export class HomePage implements OnDestroy, OnInit {
         radius: 3000
        });
       this.map.fitBounds(this.cityCircle.getBounds());
+      this.zoomLevel = this.map.getZoom();
+      console.log(this.zoomLevel);
       this.activatedRoute.paramMap.subscribe(paramMap => {
         if (!paramMap.has('categoryID'))  {
             return;
@@ -216,6 +218,9 @@ searchCategory(categoryName: string) {
                     this.addMarker(place);
               }
           }
+          this.markerClusterer = new MarkerClusterer(this.map, this.markers, {
+            imagePath: 'assets/clusterimages/m'
+          });
     }
   }
   );
@@ -225,6 +230,7 @@ addMarker(place: google.maps.places.PlaceResult) {
     position: place.geometry.location,
     map: this.map,
     label: place.name,
+    zIndex: this.zindex
     });
   this.markers.push(marker);
   google.maps.event.addListener(marker, 'click', () => {
@@ -233,6 +239,7 @@ addMarker(place: google.maps.places.PlaceResult) {
     this.infoWindow.close();
     this.infoWindow.open(this.map, marker);
   });
+  this.zindex++;
 }
 /*
 searchPlace(){
