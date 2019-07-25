@@ -8,7 +8,7 @@ namespace CompraCerca.WebAppi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class BusinessController : ControllerBase
     {
         // GET api/values
         [HttpGet]
@@ -17,11 +17,18 @@ namespace CompraCerca.WebAppi.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        // GET api/Business/product
+        [HttpGet("{id}/categorie")]
+        public IActionResult GetBusinessMatchFromCategories()
         {
-            return "value";
+            return Ok("Devolvio Negocio por categoria");
+        }
+
+        // GET api/Business/product
+        [HttpGet("product")]
+        public IActionResult GetBusinessMatchFromProduct(string nameOfProduct)
+        {
+            return Ok("Devolvio Negocio por nombre del producto");
         }
 
         // POST api/values
