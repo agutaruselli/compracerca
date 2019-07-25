@@ -1,0 +1,63 @@
+{
+"posts": [
+    {
+     "lat": 1,
+     "lng": 2,
+     "image": "one",
+     "name": "Lugar mock 1",
+     "adress": "Amazonas 1580"
+    },
+    {
+      "lat": 2,
+      "lng": 3,
+      "image": "two",
+      "name": "Lugar mock 2",
+      "adress": "Amazonas 1580"
+     },
+     {
+      "lat": 4,
+      "lng": 4,
+      "image": "three",
+      "name": "Lugar mock 3",
+      "adress": "Amazonas 1580"
+  	}
+],
+
+"categories": [
+  {
+   "father": null,
+   "id": 1,
+   "name": "Automoviles",
+   "childs": [
+     {
+      "father": 1,
+      "id": 4,
+      "name": "Audio y video",
+      "childs": null
+     },
+     {
+      "father": 1,
+      "id": 5,
+      "name": "Chasis",
+      "childs": null
+     },
+     {
+      "father": 1,
+      "id": 5,
+      "name": "Chapa y pintura",
+      "childs": null
+     }
+    ]
+  },
+  {
+   "father": null,
+   "id": 2,
+   "name": "Electrodomesticos"
+   },
+   {
+    "father": null,
+    "id": 3,
+    "name": "Restaurantes"
+  }
+]
+}

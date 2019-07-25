@@ -1,35 +1,50 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
 
-export interface ItemResponse {
-  lat: number;
-  lng: number;
-  image: string;
+export interface CategoryResponse {
+  father: number;
+  id: number;
   name: string;
-  adress: string;
 }
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class ResultadosBusquedaService {
+export class CategoriesService {
 
   BASE_URL  = 'http://localhost:3000';
-  LOCATIONS_URL = '/posts';
+  CATEGORIES_URL = '/categories';
+
 
   constructor(private http: HttpClient) {
 
   }
 
-  getLocations(textSearch: string): Observable<ItemResponse[]> {
-      return this.http.get<ItemResponse[]>(this.BASE_URL + this.LOCATIONS_URL).pipe(
+  getCategoryInfo(categoryID: string): Observable<CategoryResponse> {
+    return this.http.get<CategoryResponse>(this.BASE_URL + this.CATEGORIES_URL + '/' +  categoryID).pipe(
+      catchError(this.handleError)
+    );
+
+  }
+
+  getFatherCategories(): Observable<CategoryResponse[]> {
+      return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
         catchError(this.handleError)
       );
 
   }
+  getChildCategories(categoryID: string): Observable<CategoryResponse[]> {
+    const params = new HttpParams();
+    params.set('fatherID', categoryID.toString());
+    return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL, {params}).pipe(
+      catchError(this.handleError)
+    );
+
+}
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -46,8 +61,4 @@ export class ResultadosBusquedaService {
     return throwError(
       'Something bad happened; please try again later.');
   }
-
-
-
-
 }

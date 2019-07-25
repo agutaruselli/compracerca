@@ -6,9 +6,9 @@
     </ion-buttons>
     <ion-searchbar [(ngModel)]="query" placeholder="Buscar producto" (search)="searchText($event)"></ion-searchbar>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button [routerLink]="['/categories']" routerDirection="forward">
         <ion-icon name="options"></ion-icon>
-                 </ion-button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

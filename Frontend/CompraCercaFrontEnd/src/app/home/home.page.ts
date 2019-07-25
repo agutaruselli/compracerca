@@ -1,7 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy  } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResultadosBusquedaService } from './resultados-busqueda.service';
 import { ItemResponse } from './resultados-busqueda.service';
+import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { CategoriesService } from '../categories/categories.service';
+import { CategoryResponse } from '../categories/categories.service';
+import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
+declare var MarkerClusterer: any;
 
 
 @Component({
@@ -9,7 +15,8 @@ import { ItemResponse } from './resultados-busqueda.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnDestroy, OnInit {
+
   @ViewChild('map') mapElement: ElementRef;
   latitude: number;
   longitude: number;
@@ -20,26 +27,38 @@ export class HomePage {
   searchDisabled: boolean;
   saveDisabled: boolean;
   location: any;
-  puntero: google.maps.LatLng;
+  categorySearch: CategoryResponse = { father: null, id: null , name: null };
+  puntero: google.maps.LatLng = new google.maps.LatLng(0, 0) ;
   markers: google.maps.Marker [] = [];
-  customMarkers: Observable <ItemResponse[]> ;
-  cityCircle: google.maps.Circle;
+  customMarkers: google.maps.Marker [] = [];
+  iconoCustomMarkers = {
+    url: 'assets/icon/marcadores_compraCerca.svg',
+    scaledSize: new google.maps.Size(30, 30)
+   };
+   infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
+  respuestasCompraCerca: ItemResponse[] =  [];
+  cityCircle: google.maps.Circle = new google.maps.Circle({
+    center: this.puntero,
+    radius: 3000
+   });
+   markerClusterer: any;
+   zindex = 0;
+   zoomLevel = 0;
+  private unsubscribe$: Subject<any> = new Subject<any>();
 
-  constructor(private resultadosBusquedaService: ResultadosBusquedaService) {
+
+  constructor(private resultadosBusquedaService: ResultadosBusquedaService, private activatedRoute: ActivatedRoute, 
+              private categoriesService: CategoriesService) {
     this.searchDisabled = true;
     this.saveDisabled = true;
+  }
+  ngOnInit()  {
     this.initMap();
   }
-  ionViewDidLoad(): void {
-   /*
-    let mapLoaded = this.map.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
 
-        //.autocompleteService = new google.maps.places.AutocompleteService();
-        this.placesService = new google.maps.places.PlacesService(this.map);
-        this.searchDisabled = false;
-
-    });
-    */
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   initMap() {
@@ -63,7 +82,6 @@ export class HomePage {
           map: this.map,
           icon: icono
        });
-
       this.cityCircle = new google.maps.Circle({
         strokeColor: '#FF0000',
         strokeOpacity: 0.8,
@@ -74,13 +92,27 @@ export class HomePage {
         center: pos,
         radius: 3000
        });
+      this.map.fitBounds(this.cityCircle.getBounds());
+      this.zoomLevel = this.map.getZoom();
+      console.log(this.zoomLevel);
+      this.activatedRoute.paramMap.subscribe(paramMap => {
+        if (!paramMap.has('categoryID'))  {
+            return;
+        }
+        const categoryID = paramMap.get('categoryID');
+        this.categoriesService.getCategoryInfo(categoryID).subscribe( (res: CategoryResponse) => {
+          this.categorySearch = res;
+          console.log(res);
+          this.searchCategory(this.categorySearch.name);
+        });
+      });
 
   });
  }
 
 
   enableMap() {
-    //console.log('enable map');
+    console.log('enable map');
   }
 
   limpiarMapa() {
@@ -89,11 +121,34 @@ export class HomePage {
       this.markers[i].setMap(null);
       this.markers[i] = null;
     }
+    for (let i = 0 ; i < this.customMarkers.length; i++) {
+
+      this.customMarkers[i].setMap(null);
+      this.customMarkers[i] = null;
+    }
     this.markers = [];
+    this.customMarkers = [];
   }
 
-  getLocations() {
-    this.customMarkers = this.resultadosBusquedaService.getLocations();
+  getLocations(textSearch: string) {
+
+       this.resultadosBusquedaService.getLocations(textSearch).subscribe( (res: ItemResponse[]) => {
+        this.respuestasCompraCerca = res;
+        console.log(res);
+        for (const item of this.respuestasCompraCerca) {
+          const coordenadasCustom = new google.maps.LatLng(item.lat, item.lng);
+          if (this.cityCircle.getBounds().contains(coordenadasCustom)
+          && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadasCustom)
+            <= this.cityCircle.getRadius()) {
+              const marker = new google.maps.Marker({
+                position: coordenadasCustom,
+                map: this.map,
+                icon: this.iconoCustomMarkers
+                });
+              this.customMarkers.push(marker);
+            }
+        }
+      });
   }
 
   searchText(textoLupa) {
@@ -109,33 +164,82 @@ export class HomePage {
     const service = new google.maps.places.PlacesService(this.map);
     service.textSearch(request, (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (let i = 0; i < results.length; i++) {
-                const place = results[i];
-                const marker = new google.maps.Marker({
-                 position: place.geometry.location,
-                 map: this.map
-                });
-                this.markers.push(marker);
-        }
+            this.getLocations(textoLupa.target.value);
+            for (const result of results) {
+                const place = result;
+                //
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+
+                const coordenadas = new google.maps.LatLng(lat, lng);
+                if (this.cityCircle.getBounds().contains(coordenadas)
+                  && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas)
+                    <= this.cityCircle.getRadius()) {
+                      const marker = new google.maps.Marker({
+                      position: place.geometry.location,
+                      map: this.map
+                      });
+                      this.markers.push(marker);
+                }
+            }
       }
     }
-    ); 
-    /*
-    this.placesService.getDetails({placeId: place.place_id}, (details) => {
+    );
+}
 
-            location.name = details.name;
-            location.lat = details.geometry.location.lat();
-            location.lng = details.geometry.location.lng();
-            this.saveDisabled = false;
+searchCategory(categoryName: string) {
+  this.limpiarMapa();
+  this.places = [];
+  const request = {
+    location: this.puntero,
+    radius: 5,
+    query: categoryName
+    };
+  this.getLocations(categoryName);
+  const service = new google.maps.places.PlacesService(this.map);
+  service.textSearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (const result of results) {
+              const place = result;
+              //
+              const lat = place.geometry.location.lat();
+              const lng = place.geometry.location.lng();
 
-            this.maps.map.setCenter({lat: location.lat, lng: location.lng}); 
-
-            this.location = location;
-
-        });
-
-    });*/
-
+              const coordenadas = new google.maps.LatLng(lat, lng);
+              if (this.cityCircle.getBounds().contains(coordenadas)
+                && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas)
+                  <= this.cityCircle.getRadius()) {
+                    /*
+                    const marker = new google.maps.Marker({
+                    position: place.geometry.location,
+                    map: this.map
+                    });
+                    this.markers.push(marker);*/
+                    this.addMarker(place);
+              }
+          }
+          this.markerClusterer = new MarkerClusterer(this.map, this.markers, {
+            imagePath: 'assets/clusterimages/m'
+          });
+    }
+  }
+  );
+}
+addMarker(place: google.maps.places.PlaceResult) {
+  const marker = new google.maps.Marker({
+    position: place.geometry.location,
+    map: this.map,
+    label: place.name,
+    zIndex: this.zindex
+    });
+  this.markers.push(marker);
+  google.maps.event.addListener(marker, 'click', () => {
+    this.infoWindow.setContent('<p>' + place.name + '</p>' +
+    '<img src="' + place.icon + '" </img>');
+    this.infoWindow.close();
+    this.infoWindow.open(this.map, marker);
+  });
+  this.zindex++;
 }
 /*
 searchPlace(){

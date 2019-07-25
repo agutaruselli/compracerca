@@ -12,8 +12,24 @@ const routes: Routes = [
     loadChildren: './home/home.module#HomePageModule'
   },
   {
+    path: 'home/:categoryID',
+    loadChildren: './home/home.module#HomePageModule'
+  },
+  {
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
+  },
+  { path: 'categories',
+      children : [
+        {
+        path: '',
+        loadChildren: './categories/categories.module#CategoriesPageModule'
+        },
+        {
+        path: ':categoryID',
+        loadChildren: './categories/child-categories/child-categories.module#ChildCategoriesPageModule'
+        }
+      ]
   }
 ];
 

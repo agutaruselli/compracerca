@@ -14,12 +14,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 
-
-
-//import { Geolocation } from '@ionic-native/geolocation/ngx';
-//import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
-
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
