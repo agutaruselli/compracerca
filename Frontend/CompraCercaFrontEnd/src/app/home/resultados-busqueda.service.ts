@@ -28,7 +28,6 @@ export class ResultadosBusquedaService {
       return this.http.get<ItemResponse[]>(this.BASE_URL + this.LOCATIONS_URL).pipe(
         catchError(this.handleError)
       );
-
   }
 
   private handleError(error: HttpErrorResponse) {

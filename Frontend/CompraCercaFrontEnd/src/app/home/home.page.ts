@@ -6,9 +6,14 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
-import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
-declare var MarkerClusterer: any;
+import * as MarkerWithLabel from 'markerwithlabel';
 
+import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
+
+declare const google: any;
+
+
+declare var MarkerClusterer: any;
 
 @Component({
   selector: 'app-home',
@@ -30,6 +35,7 @@ export class HomePage implements OnDestroy, OnInit {
   categorySearch: CategoryResponse = { father: null, id: null , name: null };
   puntero: google.maps.LatLng = new google.maps.LatLng(0, 0) ;
   markers: google.maps.Marker [] = [];
+  markersWithLabel: any [] = [];
   customMarkers: google.maps.Marker [] = [];
   iconoCustomMarkers = {
     url: 'assets/icon/marcadores_compraCerca.svg',
@@ -106,7 +112,17 @@ export class HomePage implements OnDestroy, OnInit {
           this.searchCategory(this.categorySearch.name);
         });
       });
-
+      const marker = new MarkerWithLabel({
+        map: this.map,
+        animation: google.maps.Animation.DROP,
+        position: this.puntero,
+        icon: this.iconoCustomMarkers,
+        labelContent: 'Hey dj toma la disco',
+        labelAnchor: new google.maps.Point(18, 12),
+        labelClass: 'my-custom-class-for-label', // the CSS class for the label
+        labelInBackground: true,
+        labelStyle: {opacity: 0.75}
+        });
   });
  }
 
@@ -229,9 +245,25 @@ addMarker(place: google.maps.places.PlaceResult) {
   const marker = new google.maps.Marker({
     position: place.geometry.location,
     map: this.map,
-    label: place.name,
+    label: {
+      text: place.name,
+      color: '#eb3a44',
+      fontSize: '16px',
+      fontWeight: 'bold',
+    },
     zIndex: this.zindex
     });
+  /*const marker = new MarkerWithLabel({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: place.geometry.location,
+      //icon: markerIcon,
+      labelContent: place.name,
+      labelAnchor: new google.maps.Point(18, 12),
+      labelClass: 'my-custom-class-for-label', // the CSS class for the label
+      labelInBackground: true
+      });
+  this.markersWithLabel.push(marker);*/
   this.markers.push(marker);
   google.maps.event.addListener(marker, 'click', () => {
     this.infoWindow.setContent('<p>' + place.name + '</p>' +
