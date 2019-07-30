@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders  } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
@@ -11,6 +11,7 @@ export interface CategoryResponse {
 }
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +19,9 @@ export class CategoriesService {
 
   BASE_URL  = 'http://localhost:3000';
   CATEGORIES_URL = '/categories';
+
+  BASE_URL_BACKEND = 'https://localhost:44323/api/business/1';
+  LOCATIONS_URL_BACKEND = '/categorie';
 
 
   constructor(private http: HttpClient) {
@@ -28,15 +32,26 @@ export class CategoriesService {
     return this.http.get<CategoryResponse>(this.BASE_URL + this.CATEGORIES_URL + '/' +  categoryID).pipe(
       catchError(this.handleError)
     );
+  }
 
+  getBackendCategories(): Observable<string> {
+    /*const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8/plain');
+    headers.set('Accept', 'text/javascript');*/
+    const requestOptions: Object = {
+      /* other options here */
+      responseType: 'text'
+    };
+    return this.http.get<string>(this.BASE_URL_BACKEND + this.LOCATIONS_URL_BACKEND, requestOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
   getFatherCategories(): Observable<CategoryResponse[]> {
       return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
         catchError(this.handleError)
       );
-
   }
+
   getChildCategories(categoryID: string): Observable<CategoryResponse[]> {
     const params = new HttpParams();
     params.set('fatherID', categoryID.toString());

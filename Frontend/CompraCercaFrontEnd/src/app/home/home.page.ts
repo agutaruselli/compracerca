@@ -41,6 +41,11 @@ export class HomePage implements OnDestroy, OnInit {
     url: 'assets/icon/marcadores_compraCerca.svg',
     scaledSize: new google.maps.Size(30, 30)
    };
+   iconoRegularMarkers = {
+    url: 'assets/icon/marker.svg',
+    scaledSize: new google.maps.Size(30, 30),
+    labelOrigin: new google.maps.Point(0, -10)
+   };
    infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
   respuestasCompraCerca: ItemResponse[] =  [];
   cityCircle: google.maps.Circle = new google.maps.Circle({
@@ -247,11 +252,11 @@ addMarker(place: google.maps.places.PlaceResult) {
     map: this.map,
     label: {
       text: place.name,
-      color: '#eb3a44',
-      fontSize: '16px',
-      fontWeight: 'bold',
+      color: '#070606',
+      fontSize: '14px'
     },
-    zIndex: this.zindex
+    zIndex: this.zindex,
+    icon: this.iconoRegularMarkers
     });
   /*const marker = new MarkerWithLabel({
       map: this.map,
@@ -265,11 +270,13 @@ addMarker(place: google.maps.places.PlaceResult) {
       });
   this.markersWithLabel.push(marker);*/
   this.markers.push(marker);
+  const photoUrl = place.photos[0].getUrl({maxWidth: 400, maxHeight: 400});
   google.maps.event.addListener(marker, 'click', () => {
     this.infoWindow.setContent('<p>' + place.name + '</p>' +
-    '<img src="' + place.icon + '" </img>');
+    '<img src="' + photoUrl + '" </img>');
     this.infoWindow.close();
     this.infoWindow.open(this.map, marker);
+    this.infoWindow.setOptions({maxWidth: 250});
   });
   this.zindex++;
 }

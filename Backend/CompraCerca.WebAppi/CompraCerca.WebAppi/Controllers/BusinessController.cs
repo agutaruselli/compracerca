@@ -14,10 +14,17 @@ namespace CompraCerca.WebAppi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+
             return new string[] { "value1", "value2" };
         }
 
         // GET api/Business/product
+        /*[HttpGet("{id}/categorie")]
+        public IActionResult GetBusinessMatchFromCategories()
+        {
+            return Ok("Devolvio Negocio por categoria");
+        }*/
+
         [HttpGet("{id}/categorie")]
         public IActionResult GetBusinessMatchFromCategories()
         {

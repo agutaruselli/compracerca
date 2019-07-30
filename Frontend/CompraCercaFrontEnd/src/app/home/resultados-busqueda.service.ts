@@ -21,7 +21,6 @@ export class ResultadosBusquedaService {
   LOCATIONS_URL = '/posts';
 
   constructor(private http: HttpClient) {
-
   }
 
   getLocations(textSearch: string): Observable<ItemResponse[]> {
