@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
-import * as MarkerWithLabel from 'markerwithlabel';
+//import * as MarkerWithLabel from 'markerwithlabel';
 
 import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
 
@@ -117,7 +117,7 @@ export class HomePage implements OnDestroy, OnInit {
           this.searchCategory(this.categorySearch.name);
         });
       });
-      const marker = new MarkerWithLabel({
+      /*const marker = new MarkerWithLabel({
         map: this.map,
         animation: google.maps.Animation.DROP,
         position: this.puntero,
@@ -127,7 +127,7 @@ export class HomePage implements OnDestroy, OnInit {
         labelClass: 'my-custom-class-for-label', // the CSS class for the label
         labelInBackground: true,
         labelStyle: {opacity: 0.75}
-        });
+        });*/
   });
  }
 
@@ -270,16 +270,33 @@ addMarker(place: google.maps.places.PlaceResult) {
       });
   this.markersWithLabel.push(marker);*/
   this.markers.push(marker);
-  const photoUrl = place.photos[0].getUrl({maxWidth: 400, maxHeight: 400});
+  //const photoUrl = place.photos[0].getUrl({maxWidth: 400, maxHeight: 200});
   google.maps.event.addListener(marker, 'click', () => {
-    this.infoWindow.setContent('<p>' + place.name + '</p>' +
-    '<img src="' + photoUrl + '" </img>');
+    const content = this.generateInfoWindowContent(place.name, place.formatted_address.split(',')[0]);
+    this.infoWindow.setContent(content
+      //'<p>' + place.name + '</p>'
+    // +'<img src="' + photoUrl + '" </img>'
+    )
+    ;
     this.infoWindow.close();
     this.infoWindow.open(this.map, marker);
-    this.infoWindow.setOptions({maxWidth: 250});
+    this.infoWindow.setOptions({maxWidth: 232,});
   });
   this.zindex++;
 }
+
+generateInfoWindowContent(commerceTitle: string, commerceDirection: string): string {
+  const startWithLetter = /^[A-Z]/.test(commerceDirection);
+  const  hasNumber = /\d/.test(commerceDirection);
+  if (!startWithLetter || !hasNumber) {
+      commerceDirection = 'No disponible';
+  }
+  const content = '<div id="iw-container">' + '<div class="iw-title">' + commerceTitle + '</div>'
+                + '<div class="iw-subTitle">' + 'Dirección: <br> </div>'
+                + '<div class="iw-fieldInfo">' + commerceDirection + '</div></div>';
+  return content;
+}
+
 /*
 searchPlace(){
 
