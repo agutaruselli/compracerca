@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, NgZone   } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ResultadosBusquedaService } from './resultados-busqueda.service';
 import { ItemResponse } from './resultados-busqueda.service';
@@ -59,10 +60,12 @@ export class HomePage implements OnDestroy, OnInit {
 
 
   constructor(private resultadosBusquedaService: ResultadosBusquedaService, private activatedRoute: ActivatedRoute, 
-              private categoriesService: CategoriesService) {
+              private categoriesService: CategoriesService, public ngZone: NgZone, private router: Router ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
+    (window as any).angularComponent = { GoDetail: this.GoDetail, zone: ngZone };
   }
+
   ngOnInit()  {
     this.initMap();
   }
@@ -71,7 +74,10 @@ export class HomePage implements OnDestroy, OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
+  GoDetail = (id: any) => { this.ngZone.run(() => {
+    this.router.navigate(['/categories']) ;
+  });
+}
   initMap() {
     navigator.geolocation.getCurrentPosition((position) => {
       const pos = {
@@ -272,15 +278,22 @@ addMarker(place: google.maps.places.PlaceResult) {
   this.markers.push(marker);
   //const photoUrl = place.photos[0].getUrl({maxWidth: 400, maxHeight: 200});
   google.maps.event.addListener(marker, 'click', () => {
+    this.infoWindow.close();
+
     const content = this.generateInfoWindowContent(place.name, place.formatted_address.split(',')[0]);
     this.infoWindow.setContent(content
       //'<p>' + place.name + '</p>'
     // +'<img src="' + photoUrl + '" </img>'
     )
     ;
-    this.infoWindow.close();
     this.infoWindow.open(this.map, marker);
-    this.infoWindow.setOptions({maxWidth: 232,});
+    this.infoWindow.setOptions({maxWidth: 232} );
+    google.maps.event.addListener(this.infoWindow, 'domready', () => {
+     /* var clickableItem = document.getElementById('clickableItem');
+      clickableItem.addEventListener('click', () => {
+        console.log('todos putos');
+      });*/
+    });
   });
   this.zindex++;
 }
@@ -293,7 +306,9 @@ generateInfoWindowContent(commerceTitle: string, commerceDirection: string): str
   }
   const content = '<div id="iw-container">' + '<div class="iw-title">' + commerceTitle + '</div>'
                 + '<div class="iw-subTitle">' + 'Dirección: <br> </div>'
-                + '<div class="iw-fieldInfo">' + commerceDirection + '</div></div>';
+                + '<div class="iw-fieldInfo">' + commerceDirection + '</div></div>'
+                + '<ion-button expand="full" onclick="window.angularComponent.GoDetail()">Ver perfil</ion-button>';
+                // '<h2 id="clickableItem"> Click me</h2>';
   return content;
 }
 
