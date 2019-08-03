@@ -19,13 +19,7 @@ namespace CompraCerca.WebAppi.Controllers
         }
 
         // GET api/Business/product
-        /*[HttpGet("{id}/categorie")]
-        public IActionResult GetBusinessMatchFromCategories()
-        {
-            return Ok("Devolvio Negocio por categoria");
-        }*/
-
-        [HttpGet("{id}/categorie")]
+        [HttpGet("{id}/categories")]
         public IActionResult GetBusinessMatchFromCategories()
         {
             return Ok("Devolvio Negocio por categoria");
