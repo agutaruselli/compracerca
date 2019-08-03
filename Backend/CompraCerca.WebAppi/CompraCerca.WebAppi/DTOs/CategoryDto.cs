@@ -7,8 +7,8 @@ namespace CompraCerca.WebAppi.DTOs
 {
     public class CategoryDto
     {
-        public int Father { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int father { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
     }
 }

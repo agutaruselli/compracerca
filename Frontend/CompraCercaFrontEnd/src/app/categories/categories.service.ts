@@ -20,8 +20,9 @@ export class CategoriesService {
   BASE_URL  = 'http://localhost:3000';
   CATEGORIES_URL = '/categories';
 
-  BASE_URL_BACKEND = 'https://localhost:44323/api/business/1';
-  LOCATIONS_URL_BACKEND = '/categorie';
+  BASE_URL_BACKEND = 'https://localhost:44323/api/category/';
+  LOCATIONS_URL_BACKEND = 'categories/';
+  LOCATION_ID = 1;
 
 
   constructor(private http: HttpClient) {
@@ -51,12 +52,20 @@ export class CategoriesService {
         catchError(this.handleError)
       );
   }*/
+  /*
   getFatherCategories(): Observable<CategoryResponse[]> {
     return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
       catchError(this.handleError)
     );
-}
+  }*/
 
+  getFatherCategories(): Observable<CategoryResponse[]> {
+    return this.http.get<CategoryResponse[]>(this.BASE_URL_BACKEND + this.LOCATIONS_URL_BACKEND).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+ /*
   getChildCategories(categoryID: string): Observable<CategoryResponse[]> {
     const params = new HttpParams();
     params.set('fatherID', categoryID.toString());
@@ -64,7 +73,17 @@ export class CategoriesService {
       catchError(this.handleError)
     );
 
+}*/
+getChildCategories(categoryID: string): Observable<CategoryResponse[]> {
+  const params = new HttpParams();
+  params.set('id', categoryID.toString());
+  return this.http.get<CategoryResponse[]>(this.BASE_URL_BACKEND + this.LOCATIONS_URL_BACKEND, {params}).pipe(
+    catchError(this.handleError)
+  );
+
 }
+
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

@@ -19,21 +19,21 @@ namespace CompraCerca.WebAppi.Controllers
         {
             CategoryDto a = new CategoryDto()
             {
-                Id = 1,
-                Father = 0,
-                Name = "Servicios"
+                id = 1,
+                father = 0,
+                name = "Servicios"
             };
             CategoryDto b = new CategoryDto()
             {
-                Id = 2,
-                Father = 0,
-                Name = "Automoviles"
+                id = 2,
+                father = 0,
+                name = "Automoviles"
             };
             CategoryDto c = new CategoryDto()
             {
-                Id = 3,
-                Father = 0,
-                Name = "Hogar"
+                id = 3,
+                father = 0,
+                name = "Hogar"
             };
             List<CategoryDto> padres = new List<CategoryDto>() { a, b, c };
             return Ok(padres);
@@ -48,21 +48,21 @@ namespace CompraCerca.WebAppi.Controllers
         {
             CategoryDto a = new CategoryDto()
             {
-                Id = 4,
-                Father = 1,
-                Name = "Tinorerias"
+                id = 4,
+                father = 1,
+                name = "Tinorerias"
             };
             CategoryDto b = new CategoryDto()
             {
-                Id = 5,
-                Father = 1,
-                Name = "Vidrerias"
+                id = 5,
+                father = 1,
+                name = "Vidrerias"
             };
             CategoryDto c = new CategoryDto()
             {
-                Id = 6,
-                Father = 1,
-                Name = "Whiskeria"
+                id = 6,
+                father = 1,
+                name = "Whiskeria"
             };
 
            
