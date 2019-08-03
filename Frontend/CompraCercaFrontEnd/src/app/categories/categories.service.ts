@@ -59,19 +59,17 @@ export class CategoriesService {
     return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
       catchError(this.handleError)
     );
-  }*/
-
+  }
+*/
   getFatherCategories(): Observable<CategoryResponse[]> {
     return this.http.get<CategoryResponse[]>(this.BASE_URL_BACKEND + this.LOCATIONS_URL_BACKEND).pipe(
       catchError(this.handleError)
     );
   }
 
- /*
+  /*
   getChildCategories(categoryID: string): Observable<CategoryResponse[]> {
-    const params = new HttpParams();
-    params.set('fatherID', categoryID.toString());
-    return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL, {params}).pipe(
+    return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
       catchError(this.handleError)
     );
 

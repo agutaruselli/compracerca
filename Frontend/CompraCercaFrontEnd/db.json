@@ -27,27 +27,7 @@
   {
    "father": null,
    "id": 1,
-   "name": "Automoviles",
-   "childs": [
-     {
-      "father": 1,
-      "id": 4,
-      "name": "Audio y video",
-      "childs": null
-     },
-     {
-      "father": 1,
-      "id": 5,
-      "name": "Chasis",
-      "childs": null
-     },
-     {
-      "father": 1,
-      "id": 5,
-      "name": "Chapa y pintura",
-      "childs": null
-     }
-    ]
+   "name": "Automoviles"
   },
   {
    "father": null,
@@ -58,6 +38,21 @@
     "father": null,
     "id": 3,
     "name": "Restaurantes"
-  }
+   },
+   {
+    "father": null,
+    "id": 4,
+    "name": "Tintorerias"
+   },
+   {
+    "father": null,
+    "id": 5,
+    "name": "Vidrierias"
+   },
+   {
+    "father": null,
+    "id": 6,
+    "name": "Whiskerias"
+   }
 ]
 }

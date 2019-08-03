@@ -225,6 +225,7 @@ searchCategory(categoryName: string) {
   this.getLocations(categoryName);
   const service = new google.maps.places.PlacesService(this.map);
   service.textSearch(request, (results, status) => {
+        console.log(results);
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           for (const result of results) {
               const place = result;
@@ -262,7 +263,9 @@ addMarker(place: google.maps.places.PlaceResult) {
       fontSize: '14px'
     },
     zIndex: this.zindex,
-    icon: this.iconoRegularMarkers
+    icon: this.iconoRegularMarkers,
+    id: place.place_id,
+    fromGoogle: true
     });
   /*const marker = new MarkerWithLabel({
       map: this.map,
