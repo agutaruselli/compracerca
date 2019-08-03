@@ -8,8 +8,8 @@ namespace CompraCerca.Domain
     public class Category
     {
         [Key]
-        public Guid Id { get; set; }
-        public Guid Father { get; set; }
+        public int Id { get; set; }
+        public string Father { get; set; }
         public string Name { get; set; }
     }
 }
