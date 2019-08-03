@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace CompraCerca.WebAppi.DTOs
 {
-    public class CategoryDto
+    public class BusinessDto
     {
-        public int father { get; set; }
-        public int id { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
+        public string adress { get; set; }
         public string name { get; set; }
     }
 }
