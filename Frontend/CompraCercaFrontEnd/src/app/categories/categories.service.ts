@@ -45,12 +45,17 @@ export class CategoriesService {
       catchError(this.handleError)
     );
   }
-
+  /*
   getFatherCategories(): Observable<CategoryResponse[]> {
       return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
         catchError(this.handleError)
       );
-  }
+  }*/
+  getFatherCategories(): Observable<CategoryResponse[]> {
+    return this.http.get<CategoryResponse[]>(this.BASE_URL + this.CATEGORIES_URL).pipe(
+      catchError(this.handleError)
+    );
+}
 
   getChildCategories(categoryID: string): Observable<CategoryResponse[]> {
     const params = new HttpParams();
