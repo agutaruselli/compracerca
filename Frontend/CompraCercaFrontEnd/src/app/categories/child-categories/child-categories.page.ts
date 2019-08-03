@@ -25,9 +25,9 @@ export class ChildCategoriesPage implements OnInit {
           console.log(res);
         });
 
-        this.categoriesService.getChildCategories(categoryID).subscribe( (res: CategoryResponse[]) => {
-          this.childCategories = res;
-          console.log(res);
+        this.categoriesService.getChildCategories(categoryID).subscribe( (resp: CategoryResponse[]) => {
+          this.childCategories = resp;
+          console.log(resp);
         });
       });
   }

@@ -22,6 +22,8 @@ export class CategoriesService {
 
   BASE_URL_BACKEND = 'https://localhost:44323/api/category/';
   LOCATIONS_URL_BACKEND = 'categories/';
+  LOCATIONS_URL_BACKEND2 = 'categories/';
+
   LOCATION_ID = 1;
 
 
@@ -75,9 +77,7 @@ export class CategoriesService {
 
 }*/
 getChildCategories(categoryID: string): Observable<CategoryResponse[]> {
-  const params = new HttpParams();
-  params.set('id', categoryID.toString());
-  return this.http.get<CategoryResponse[]>(this.BASE_URL_BACKEND + this.LOCATIONS_URL_BACKEND, {params}).pipe(
+  return this.http.get<CategoryResponse[]>(this.BASE_URL_BACKEND + this.LOCATIONS_URL_BACKEND2 + categoryID).pipe(
     catchError(this.handleError)
   );
 
