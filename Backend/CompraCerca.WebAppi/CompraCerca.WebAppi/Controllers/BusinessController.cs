@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CompraCerca.WebAppi.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompraCerca.WebAppi.Controllers
@@ -10,26 +11,69 @@ namespace CompraCerca.WebAppi.Controllers
     [ApiController]
     public class BusinessController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/Business/product
-        [HttpGet("{id}/categories")]
+        [HttpGet("category/{id}")]
         public IActionResult GetBusinessMatchFromCategories()
         {
-            return Ok("Devolvio Negocio por categoria");
+            BusinessDto a = new BusinessDto()
+            {
+                latitude = 34.45666,
+                longitude = 56.4444,
+                adress = "Avenida siempre viva 123",
+                name = "el bar de juan"
+            };
+
+            BusinessDto b = new BusinessDto()
+            {
+                latitude = 34.45666,
+                longitude = 56.4444,
+                adress = "Avenida de los libertadores 123",
+                name = "el bar del pepe"
+            };
+
+            BusinessDto c = new BusinessDto()
+            {
+                latitude = 34.45666,
+                longitude = 56.4444,
+                adress = "Avenida 123",
+                name = "el bar ameno"
+            };
+
+            List<BusinessDto> businesses = new List<BusinessDto>();
+            return Ok(businesses);
         }
 
         // GET api/Business/product
-        [HttpGet("product")]
-        public IActionResult GetBusinessMatchFromProduct(string nameOfProduct)
+        [HttpGet("product/{product}")]
+        public IActionResult GetBusinessMatchFromProduct()
         {
-            return Ok("Devolvio Negocio por nombre del producto");
+            BusinessDto a = new BusinessDto()
+            {
+                latitude = 34.45666,
+                longitude = 56.4444,
+                adress = "Avenida siempre viva 123",
+                name = "el bar de juan"
+            };
+
+            BusinessDto b = new BusinessDto()
+            {
+                latitude = 34.45666,
+                longitude = 56.4444,
+                adress = "Avenida de los libertadores 123",
+                name = "el bar del pepe"
+            };
+
+            BusinessDto c = new BusinessDto()
+            {
+                latitude = 34.45666,
+                longitude = 56.4444,
+                adress = "Avenida 123",
+                name = "el bar ameno"
+            };
+
+            List<BusinessDto> businesses = new List<BusinessDto>();
+            return Ok(businesses);
         }
 
         // POST api/values
