@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ResultadosBusquedaService } from './resultados-busqueda.service';
 import { ItemResponse } from './resultados-busqueda.service';
 import { Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
 //import * as MarkerWithLabel from 'markerwithlabel';
@@ -12,9 +12,14 @@ import { CategoryResponse } from '../categories/categories.service';
 import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
 
 declare const google: any;
-
-
 declare var MarkerClusterer: any;
+
+export interface CommerceResult {
+  id: string;
+  fromGoogle: boolean;
+}
+
+
 
 @Component({
   selector: 'app-home',
@@ -74,8 +79,18 @@ export class HomePage implements OnDestroy, OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-  GoDetail = (id: any) => { this.ngZone.run(() => {
-    this.router.navigate(['/categories']) ;
+  GoDetail = (idCommerce: string, isFromGoogle: boolean) => { this.ngZone.run(() => {
+
+    const commerceSelected = {
+      id: idCommerce,
+      fromGoogle: isFromGoogle
+    };
+    const navigationExtras: NavigationExtras = {
+      state: {
+        commerce: commerceSelected
+      }
+    };
+    this.router.navigate(['/categories'], navigationExtras) ;
   });
 }
   initMap() {
@@ -283,7 +298,7 @@ addMarker(place: google.maps.places.PlaceResult) {
   google.maps.event.addListener(marker, 'click', () => {
     this.infoWindow.close();
 
-    const content = this.generateInfoWindowContent(place.name, place.formatted_address.split(',')[0]);
+    const content = this.generateInfoWindowContent(place, marker);
     this.infoWindow.setContent(content
       //'<p>' + place.name + '</p>'
     // +'<img src="' + photoUrl + '" </img>'
@@ -301,16 +316,19 @@ addMarker(place: google.maps.places.PlaceResult) {
   this.zindex++;
 }
 
-generateInfoWindowContent(commerceTitle: string, commerceDirection: string): string {
+generateInfoWindowContent(place: google.maps.places.PlaceResult, marker: google.maps.Marker): string {
+  let commerceDirection = place.formatted_address.split(',')[0];
   const startWithLetter = /^[A-Z]/.test(commerceDirection);
   const  hasNumber = /\d/.test(commerceDirection);
   if (!startWithLetter || !hasNumber) {
       commerceDirection = 'No disponible';
   }
+  const commerceTitle = place.name;
   const content = '<div id="iw-container">' + '<div class="iw-title">' + commerceTitle + '</div>'
                 + '<div class="iw-subTitle">' + 'Dirección: <br> </div>'
                 + '<div class="iw-fieldInfo">' + commerceDirection + '</div></div>'
-                + '<ion-button expand="full" onclick="window.angularComponent.GoDetail()">Ver perfil</ion-button>';
+                + '<ion-button expand="full" onclick="window.angularComponent.GoDetail(' + place.id  + ', ' + true +
+                ')">Ver perfil</ion-button>';
                 // '<h2 id="clickableItem"> Click me</h2>';
   return content;
 }
