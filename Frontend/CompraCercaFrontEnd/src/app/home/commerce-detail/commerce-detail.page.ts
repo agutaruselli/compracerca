@@ -11,7 +11,7 @@ import { ResultadosBusquedaService, ItemResponse } from '../resultados-busqueda.
 
 export class CommerceDetailPage implements OnInit {
   data: any;
-  activeCommerce: ItemResponse;
+  activeCommerce: ItemResponse = { lat: null, lng: null , image: null, name: null, adress: null };
 
   constructor(private route: ActivatedRoute, private router: Router, private resultadosBusquedaService: ResultadosBusquedaService ) {
     /*this.route.queryParams.subscribe(params => {
@@ -30,12 +30,12 @@ export class CommerceDetailPage implements OnInit {
 
   ngOnInit() {
     if (this.resultadosBusquedaService.getActiveGoogleCommerce != null) {
-        
-    } 
+        this.activeCommerce.name = this.resultadosBusquedaService.getActiveGoogleCommerce().name;
+    }
     if (this.resultadosBusquedaService.getActiveCompraCercaCommerce != null) {
 
     }
   }
 
 }
-}
+

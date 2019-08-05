@@ -94,7 +94,7 @@ export class HomePage implements OnDestroy, OnInit {
     this.router.navigate(['/categories'], navigationExtras) ;
   });
 }*/
-GoDetailGoogle = (place: google.maps.Place) => { this.ngZone.run(() => {
+GoDetailGoogle = (place: google.maps.places.PlaceResult) => { this.ngZone.run(() => {
   this.resultadosBusquedaService.setActiveGoogleCommerce(place);
   this.router.navigate(['/commerce-detail']) ;
 });

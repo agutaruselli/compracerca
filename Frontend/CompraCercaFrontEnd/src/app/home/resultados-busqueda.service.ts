@@ -20,12 +20,12 @@ export class ResultadosBusquedaService {
   BASE_URL  = 'http://localhost:3000';
   LOCATIONS_URL = '/posts';
 
-  activeGoogleCommerce: google.maps.Place;
+  activeGoogleCommerce:  google.maps.places.PlaceResult;
   activeCompraCercaCommerce: ItemResponse;
 
   constructor(private http: HttpClient) {
   }
-  setActiveGoogleCommerce(commerce: google.maps.Place) {
+  setActiveGoogleCommerce(commerce: google.maps.places.PlaceResult) {
     this.activeCompraCercaCommerce = null;
     this.activeGoogleCommerce = commerce;
   }
