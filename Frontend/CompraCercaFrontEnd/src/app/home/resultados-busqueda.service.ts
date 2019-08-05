@@ -20,9 +20,25 @@ export class ResultadosBusquedaService {
   BASE_URL  = 'http://localhost:3000';
   LOCATIONS_URL = '/posts';
 
+  activeGoogleCommerce: google.maps.Place;
+  activeCompraCercaCommerce: ItemResponse;
+
   constructor(private http: HttpClient) {
   }
-
+  setActiveGoogleCommerce(commerce: google.maps.Place) {
+    this.activeCompraCercaCommerce = null;
+    this.activeGoogleCommerce = commerce;
+  }
+  getActiveGoogleCommerce() {
+    return this.activeGoogleCommerce;
+  }
+  setActiveCompraCercaCommerce(commerce: ItemResponse) {
+    this.activeGoogleCommerce = null;
+    this.activeCompraCercaCommerce = commerce;
+  }
+  getActiveCompraCercaCommerce() {
+    return this.activeGoogleCommerce;
+  }
   getLocations(textSearch: string): Observable<ItemResponse[]> {
       return this.http.get<ItemResponse[]>(this.BASE_URL + this.LOCATIONS_URL).pipe(
         catchError(this.handleError)

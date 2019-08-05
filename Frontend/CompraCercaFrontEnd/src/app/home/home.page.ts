@@ -68,7 +68,7 @@ export class HomePage implements OnDestroy, OnInit {
               private categoriesService: CategoriesService, public ngZone: NgZone, private router: Router ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
-    (window as any).angularComponent = { GoDetail: this.GoDetail, zone: ngZone };
+    (window as any).angularComponent = { GoDetail: this.GoDetailGoogle, zone: ngZone };
   }
 
   ngOnInit()  {
@@ -79,7 +79,8 @@ export class HomePage implements OnDestroy, OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-  GoDetail = (idCommerce: string, isFromGoogle: boolean) => { this.ngZone.run(() => {
+  /*
+  GoDetailGoogle = (idCommerce: string, isFromGoogle: boolean) => { this.ngZone.run(() => {
 
     const commerceSelected = {
       id: idCommerce,
@@ -92,6 +93,11 @@ export class HomePage implements OnDestroy, OnInit {
     };
     this.router.navigate(['/categories'], navigationExtras) ;
   });
+}*/
+GoDetailGoogle = (place: google.maps.Place) => { this.ngZone.run(() => {
+  this.resultadosBusquedaService.setActiveGoogleCommerce(place);
+  this.router.navigate(['/commerce-detail']) ;
+});
 }
   initMap() {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -327,7 +333,7 @@ generateInfoWindowContent(place: google.maps.places.PlaceResult, marker: google.
   const content = '<div id="iw-container">' + '<div class="iw-title">' + commerceTitle + '</div>'
                 + '<div class="iw-subTitle">' + 'Dirección: <br> </div>'
                 + '<div class="iw-fieldInfo">' + commerceDirection + '</div></div>'
-                + '<ion-button expand="full" onclick="window.angularComponent.GoDetail(' + place.id  + ', ' + true +
+                + '<ion-button expand="full" onclick="window.angularComponent.GoDetailGoogle(' + place +
                 ')">Ver perfil</ion-button>';
                 // '<h2 id="clickableItem"> Click me</h2>';
   return content;
