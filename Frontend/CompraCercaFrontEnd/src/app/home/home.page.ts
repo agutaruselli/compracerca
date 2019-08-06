@@ -33,6 +33,7 @@ export class HomePage implements OnDestroy, OnInit {
   longitude: number;
   map: google.maps.Map;
   placesService: google.maps.places.PlacesService;
+  placeSelected: google.maps.places.PlaceResult;
   query = '';
   places: any = [];
   searchDisabled: boolean;
@@ -68,7 +69,7 @@ export class HomePage implements OnDestroy, OnInit {
               private categoriesService: CategoriesService, public ngZone: NgZone, private router: Router ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
-    (window as any).angularComponent = { GoDetail: this.GoDetailGoogle, zone: ngZone };
+    (window as any).angularComponent = { GoDetailGoogle: this.GoDetailGoogle, zone: ngZone };
   }
 
   ngOnInit()  {
@@ -94,8 +95,8 @@ export class HomePage implements OnDestroy, OnInit {
     this.router.navigate(['/categories'], navigationExtras) ;
   });
 }*/
-GoDetailGoogle = (place: google.maps.places.PlaceResult) => { this.ngZone.run(() => {
-  this.resultadosBusquedaService.setActiveGoogleCommerce(place);
+GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
+  this.resultadosBusquedaService.setActiveGoogleCommerce(this.placeSelected);
   this.router.navigate(['/commerce-detail']) ;
 });
 }
@@ -330,10 +331,11 @@ generateInfoWindowContent(place: google.maps.places.PlaceResult, marker: google.
       commerceDirection = 'No disponible';
   }
   const commerceTitle = place.name;
+  this.placeSelected = place;
   const content = '<div id="iw-container">' + '<div class="iw-title">' + commerceTitle + '</div>'
                 + '<div class="iw-subTitle">' + 'Dirección: <br> </div>'
                 + '<div class="iw-fieldInfo">' + commerceDirection + '</div></div>'
-                + '<ion-button expand="full" onclick="window.angularComponent.GoDetailGoogle(' + place +
+                + '<ion-button expand="full" onclick="window.angularComponent.GoDetailGoogle(' +
                 ')">Ver perfil</ion-button>';
                 // '<h2 id="clickableItem"> Click me</h2>';
   return content;
