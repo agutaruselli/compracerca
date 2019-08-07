@@ -6,16 +6,13 @@
     <ion-title> {{activeCommerce.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-    
+            <ion-content>
               <ion-slides>
                   <ion-slide *ngFor="let photo of photoUrls">
                       <ion-img [src]= "photo"> </ion-img>
                   </ion-slide>
-                </ion-slides>
-       
-    <ion-grid>
+              </ion-slides>
+        <ion-grid>
         <ion-row>
           <ion-col>
             <h1> {{ activeCommerce.name }}</h1>
@@ -29,5 +26,5 @@
             </ion-list>
           </ion-col>
         </ion-row>
-      </ion-grid>
+    </ion-grid>
 </ion-content>

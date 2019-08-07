@@ -31,10 +31,13 @@ export class CommerceDetailPage implements OnInit {
     });*/
 
   }
+  ionViewDidLoad() {
 
+  }
   ngOnInit() {
     if (this.resultadosBusquedaService.getActiveGoogleCommerce != null) {
         this.placeSelected = this.resultadosBusquedaService.getActiveGoogleCommerce();
+        this.activeCommerce.name = this.placeSelected.name;
         this.placesPhotos = this.placeSelected.photos;
         //this.photoUrls.push(this.placesPhotos[0].getUrl({maxWidth: 100, maxHeight: 100}));
         
