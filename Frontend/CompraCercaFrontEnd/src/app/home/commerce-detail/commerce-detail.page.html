@@ -1,19 +1,21 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons>
-      <ion-back-button slot="start"></ion-back-button>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>commerce-detail</ion-title>
+    <ion-title> {{activeCommerce.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col no-padding>
-              <ion-img [src]=''> </ion-img>
-          </ion-col>
-        </ion-row>
+    
+              <ion-slides>
+                  <ion-slide *ngFor="let photo of photoUrls">
+                      <ion-img [src]= "photo"> </ion-img>
+                  </ion-slide>
+                </ion-slides>
+       
+    <ion-grid>
         <ion-row>
           <ion-col>
             <h1> {{ activeCommerce.name }}</h1>

@@ -12,6 +12,10 @@ import { ResultadosBusquedaService, ItemResponse } from '../resultados-busqueda.
 export class CommerceDetailPage implements OnInit {
   data: any;
   activeCommerce: ItemResponse = { lat: null, lng: null , image: null, name: null, adress: null };
+  placeSelected: google.maps.places.PlaceResult;
+  placesPhotos: google.maps.places.PlacePhoto[];
+  photoUrls: string[] = [];
+
 
   constructor(private route: ActivatedRoute, private router: Router, private resultadosBusquedaService: ResultadosBusquedaService ) {
     /*this.route.queryParams.subscribe(params => {
@@ -30,12 +34,29 @@ export class CommerceDetailPage implements OnInit {
 
   ngOnInit() {
     if (this.resultadosBusquedaService.getActiveGoogleCommerce != null) {
-        this.activeCommerce.name = this.resultadosBusquedaService.getActiveGoogleCommerce().name;
-    }
+        this.placeSelected = this.resultadosBusquedaService.getActiveGoogleCommerce();
+        this.placesPhotos = this.placeSelected.photos;
+        //this.photoUrls.push(this.placesPhotos[0].getUrl({maxWidth: 100, maxHeight: 100}));
+        
+        const request = {
+          placeId: this.placeSelected.place_id,
+          fields: ['photo']
+        };
+        const service = new google.maps.places.PlacesService(document.createElement('div'));
+        service.getDetails(request, (place, status)  => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            this.placesPhotos = place.photos;
+            for (const photo of this.placesPhotos) {
+              this.photoUrls.push(photo.getUrl({maxWidth: null, maxHeight: null}));
+            }
+            console.log(place);
+          }
+        });
+  
     if (this.resultadosBusquedaService.getActiveCompraCercaCommerce != null) {
 
     }
   }
 
 }
-
+}
