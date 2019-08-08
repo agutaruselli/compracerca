@@ -20,14 +20,36 @@ export class ResultadosBusquedaService {
   BASE_URL  = 'http://localhost:3000';
   LOCATIONS_URL = '/posts';
 
-  activeGoogleCommerce:  google.maps.places.PlaceResult;
+  activeGoogleCommerce: google.maps.places.PlaceResult;
+
   activeCompraCercaCommerce: ItemResponse;
+
+  photoUrls: string[] = [];
 
   constructor(private http: HttpClient) {
   }
-  setActiveGoogleCommerce(commerce: google.maps.places.PlaceResult) {
+  async setActiveGoogleCommerce(commerce: google.maps.places.PlaceResult) {
     this.activeCompraCercaCommerce = null;
+    this.photoUrls = null;
+    this.photoUrls = [];
+    const request = {
+      placeId: commerce.place_id,
+      fields: ['photo']
+    };
+    const service = new google.maps.places.PlacesService(document.createElement('div'));
+    await this.callGoogleDetails(service, request);
     this.activeGoogleCommerce = commerce;
+  }
+  private callGoogleDetails(service: any, request: any) {
+    service.getDetails(request, (place, status)  => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        if(place.photos != null) {
+            for (const photo of  place.photos) {
+              this.photoUrls.push(photo.getUrl({maxWidth: null, maxHeight: null}));
+            }
+        }
+      }
+    });
   }
   getActiveGoogleCommerce() {
     return this.activeGoogleCommerce;

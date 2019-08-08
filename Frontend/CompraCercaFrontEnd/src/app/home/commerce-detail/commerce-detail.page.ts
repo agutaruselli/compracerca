@@ -39,6 +39,11 @@ export class CommerceDetailPage implements OnInit {
   }
   async ngOnInit() {
     if (this.resultadosBusquedaService.getActiveGoogleCommerce != null) {
+      this.photoUrls = this.resultadosBusquedaService.photoUrls;
+      this.placeSelected = this.resultadosBusquedaService.getActiveGoogleCommerce();
+
+      this.activeCommerce.name = this.placeSelected.name;
+      /*
         this.placeSelected = this.resultadosBusquedaService.getActiveGoogleCommerce();
         this.activeCommerce.name = this.placeSelected.name;
         this.placesPhotos = this.placeSelected.photos;
@@ -50,7 +55,7 @@ export class CommerceDetailPage implements OnInit {
         };
         const service = new google.maps.places.PlacesService(document.createElement('div'));
         await this.callGoogleDetails(service, request);
-  
+      */
     if (this.resultadosBusquedaService.getActiveCompraCercaCommerce != null) {
 
     }
