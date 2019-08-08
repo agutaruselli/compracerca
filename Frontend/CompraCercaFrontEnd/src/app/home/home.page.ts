@@ -70,6 +70,7 @@ export class HomePage implements OnDestroy, OnInit {
     this.searchDisabled = true;
     this.saveDisabled = true;
     (window as any).angularComponent = { GoDetailGoogle: this.GoDetailGoogle, zone: ngZone };
+    this.limpiarMapa();
   }
 
   ngOnInit()  {

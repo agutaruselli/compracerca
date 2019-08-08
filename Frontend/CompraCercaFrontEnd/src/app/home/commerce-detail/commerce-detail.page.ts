@@ -13,8 +13,11 @@ export class CommerceDetailPage implements OnInit {
   data: any;
   activeCommerce: ItemResponse = { lat: null, lng: null , image: null, name: null, adress: null };
   placeSelected: google.maps.places.PlaceResult;
-  placesPhotos: google.maps.places.PlacePhoto[];
+  placesPhotos: google.maps.places.PlacePhoto[] = [];
   photoUrls: string[] = [];
+  slideOpts = {
+    initialSlide: 2
+  };
 
 
   constructor(private route: ActivatedRoute, private router: Router, private resultadosBusquedaService: ResultadosBusquedaService ) {
@@ -34,7 +37,7 @@ export class CommerceDetailPage implements OnInit {
   ionViewDidLoad() {
 
   }
-  ngOnInit() {
+  async ngOnInit() {
     if (this.resultadosBusquedaService.getActiveGoogleCommerce != null) {
         this.placeSelected = this.resultadosBusquedaService.getActiveGoogleCommerce();
         this.activeCommerce.name = this.placeSelected.name;
@@ -46,15 +49,7 @@ export class CommerceDetailPage implements OnInit {
           fields: ['photo']
         };
         const service = new google.maps.places.PlacesService(document.createElement('div'));
-        service.getDetails(request, (place, status)  => {
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-            this.placesPhotos = place.photos;
-            for (const photo of this.placesPhotos) {
-              this.photoUrls.push(photo.getUrl({maxWidth: null, maxHeight: null}));
-            }
-            console.log(place);
-          }
-        });
+        await this.callGoogleDetails(service, request);
   
     if (this.resultadosBusquedaService.getActiveCompraCercaCommerce != null) {
 
@@ -62,4 +57,15 @@ export class CommerceDetailPage implements OnInit {
   }
 
 }
+  private callGoogleDetails(service: any, request: any) {
+    service.getDetails(request, (place, status)  => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        if(place.photos != null) {
+            for (const photo of  place.photos) {
+              this.photoUrls.push(photo.getUrl({maxWidth: null, maxHeight: null}));
+            }
+        }
+      }
+    });
+  }
 }

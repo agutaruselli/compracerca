@@ -7,21 +7,33 @@
   </ion-toolbar>
 </ion-header>
             <ion-content>
-              <ion-slides>
+              <ion-slides [options]="slideOpts" paginationType="progress">
                   <ion-slide *ngFor="let photo of photoUrls">
                       <ion-img [src]= "photo"> </ion-img>
                   </ion-slide>
               </ion-slides>
-        <ion-grid>
+        <ion-grid no-padding>
         <ion-row>
-          <ion-col>
-            <h1> {{ activeCommerce.name }}</h1>
+          <ion-col no-padding>
+              <ion-text color="dark">
+                  <h1 text-center> {{ activeCommerce.name }}</h1>
+                </ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
             <ion-list>
               <ion-item>
+                  <ion-icon name="pin"></ion-icon>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="keypad"></ion-icon>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="planet"></ion-icon>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="call"></ion-icon>
               </ion-item>
             </ion-list>
           </ion-col>
