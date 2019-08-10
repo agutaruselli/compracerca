@@ -13,6 +13,9 @@ export class CommerceDetailPage implements OnInit {
   data: any;
   activeCommerce: ItemResponse = { lat: null, lng: null , image: null, name: null, adress: null };
   placeSelected: google.maps.places.PlaceResult;
+  extraInfoPlaceSelected: google.maps.places.PlaceResult;
+
+
   placesPhotos: google.maps.places.PlacePhoto[] = [];
   photoUrls: string[] = [];
   slideOpts = {
@@ -34,14 +37,13 @@ export class CommerceDetailPage implements OnInit {
     });*/
 
   }
-  ionViewDidLoad() {
 
-  }
+
   async ngOnInit() {
     if (this.resultadosBusquedaService.getActiveGoogleCommerce != null) {
       this.photoUrls = this.resultadosBusquedaService.photoUrls;
       this.placeSelected = this.resultadosBusquedaService.getActiveGoogleCommerce();
-
+      this.extraInfoPlaceSelected = this.resultadosBusquedaService.extraGoogleCommerce;
       this.activeCommerce.name = this.placeSelected.name;
       /*
         this.placeSelected = this.resultadosBusquedaService.getActiveGoogleCommerce();

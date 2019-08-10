@@ -25,15 +25,19 @@
             <ion-list>
               <ion-item>
                   <ion-icon name="pin"></ion-icon>
+                  <h3>{{ placeSelected.formatted_address }}</h3>
               </ion-item>
               <ion-item>
                   <ion-icon name="keypad"></ion-icon>
+                  <h3>{{ placeSelected.name }}</h3>
               </ion-item>
               <ion-item>
                   <ion-icon name="planet"></ion-icon>
+                  <h3>{{ extraInfoPlaceSelected.website }}</h3>
               </ion-item>
               <ion-item>
                   <ion-icon name="call"></ion-icon>
+                  <h3>{{ extraInfoPlaceSelected.formatted_phone_number }}</h3>
               </ion-item>
             </ion-list>
           </ion-col>

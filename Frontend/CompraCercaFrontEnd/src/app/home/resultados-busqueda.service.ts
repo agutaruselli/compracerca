@@ -21,36 +21,54 @@ export class ResultadosBusquedaService {
   LOCATIONS_URL = '/posts';
 
   activeGoogleCommerce: google.maps.places.PlaceResult;
-
+  extraGoogleCommerce: google.maps.places.PlaceResult ;
   activeCompraCercaCommerce: ItemResponse;
+
 
   photoUrls: string[] = [];
 
   constructor(private http: HttpClient) {
   }
-  async setActiveGoogleCommerce(commerce: google.maps.places.PlaceResult) {
+  /*async*/ setActiveGoogleCommerce(commerce: google.maps.places.PlaceResult) {
     this.activeCompraCercaCommerce = null;
     this.photoUrls = null;
     this.photoUrls = [];
     const request = {
       placeId: commerce.place_id,
-      fields: ['photo']
+      fields: ['photo', 'formatted_phone_number', 'international_phone_number', 'opening_hours', 'website']
     };
     const service = new google.maps.places.PlacesService(document.createElement('div'));
-    await this.callGoogleDetails(service, request);
+    /*await*/ this.callGoogleDetails(service, request);
     this.activeGoogleCommerce = commerce;
   }
-  private callGoogleDetails(service: any, request: any) {
+ /*private callGoogleDetails(service: any, request: any) {
     service.getDetails(request, (place, status)  => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        if(place.photos != null) {
+        this.extraGoogleCommerce = place;
+        if (place.photos != null) {
             for (const photo of  place.photos) {
               this.photoUrls.push(photo.getUrl({maxWidth: null, maxHeight: null}));
             }
         }
       }
     });
-  }
+ }*/
+  private callGoogleDetails(service: any, request: any) {
+  //  return new Promise((resolve, reject) => {
+    service.getDetails(request, (place, status)  => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        this.extraGoogleCommerce = place;
+        if (place.photos != null) {
+            for (const photo of  place.photos) {
+              this.photoUrls.push(photo.getUrl({maxWidth: null, maxHeight: null}));
+            }
+        }
+      }
+    });
+ // });
+}
+
+
   getActiveGoogleCommerce() {
     return this.activeGoogleCommerce;
   }
