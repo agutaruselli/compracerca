@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CommerceDetailResolverService } from './home/commerce-detail/commerce-detail-resolver.service';
 
 const routes: Routes = [
   {
@@ -30,7 +31,14 @@ const routes: Routes = [
         loadChildren: './categories/child-categories/child-categories.module#ChildCategoriesPageModule'
         }
       ]
-  },  { path: 'commerce-detail', loadChildren: './home/commerce-detail/commerce-detail.module#CommerceDetailPageModule' }
+  },
+  { path: 'commerce-detail/:id', loadChildren: './home/commerce-detail/commerce-detail.module#CommerceDetailPageModule',
+    resolve: {
+    commerce: CommerceDetailResolverService
+  },
+
+
+  }
 
 ];
 
@@ -38,6 +46,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [CommerceDetailResolverService]
 })
 export class AppRoutingModule {}

@@ -35,6 +35,7 @@ export class HomePage implements OnDestroy, OnInit {
   placesService: google.maps.places.PlacesService;
   placeSelected: google.maps.places.PlaceResult;
   query = '';
+  separatorCharacter = ';';
   places: any = [];
   searchDisabled: boolean;
   saveDisabled: boolean;
@@ -98,7 +99,8 @@ export class HomePage implements OnDestroy, OnInit {
 }*/
 GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
   this.resultadosBusquedaService.setActiveGoogleCommerce(this.placeSelected);
-  this.router.navigate(['/commerce-detail']) ;
+  const commerceDetailParameters = this.placeSelected.id + this.separatorCharacter + 'Google';
+  this.router.navigate(['/commerce-detail', commerceDetailParameters]) ;
 });
 }
   initMap() {

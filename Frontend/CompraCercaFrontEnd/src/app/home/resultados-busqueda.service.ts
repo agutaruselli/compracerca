@@ -33,13 +33,14 @@ export class ResultadosBusquedaService {
     this.activeCompraCercaCommerce = null;
     this.photoUrls = null;
     this.photoUrls = [];
+    this.activeGoogleCommerce = commerce;
+    /*
     const request = {
       placeId: commerce.place_id,
       fields: ['photo', 'formatted_phone_number', 'international_phone_number', 'opening_hours', 'website']
     };
     const service = new google.maps.places.PlacesService(document.createElement('div'));
-    /*await*/ this.callGoogleDetails(service, request);
-    this.activeGoogleCommerce = commerce;
+    await this.callGoogleDetails(service, request);*/
   }
  /*private callGoogleDetails(service: any, request: any) {
     service.getDetails(request, (place, status)  => {
