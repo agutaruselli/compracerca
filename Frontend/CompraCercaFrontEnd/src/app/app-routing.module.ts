@@ -38,7 +38,8 @@ const routes: Routes = [
   },
 
 
-  },  { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
+  },  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'register', loadChildren: './login/register/register.module#RegisterPageModule' }
 
 
 ];

@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
       .subscribe(res => {
         if (res.token) {
           localStorage.setItem('token', res.token);
-          this.router.navigate(['book']);
+          this.router.navigate(['home']);
         }
       }, (err) => {
         console.log(err);
