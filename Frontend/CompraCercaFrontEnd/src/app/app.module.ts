@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from './interceptors/token-interceptor.service';
 
 
 
@@ -29,7 +31,13 @@ import { HttpClientModule } from '@angular/common/http';
     SplashScreen,
    // Geolocation,
    // NativeGeocoder,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+
   ],
   bootstrap: [AppComponent]
 })
