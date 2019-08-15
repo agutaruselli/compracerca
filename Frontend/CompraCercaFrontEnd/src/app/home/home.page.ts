@@ -60,7 +60,7 @@ export class HomePage implements OnDestroy, OnInit {
     center: this.puntero,
     radius: 3000
    });
-   markerClusterer: any;
+   markerClusterer: any ;
    zindex = 0;
    zoomLevel = 0;
   private unsubscribe$: Subject<any> = new Subject<any>();
@@ -168,9 +168,13 @@ GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
   }
 
   limpiarMapa() {
+    if(this.markerClusterer != null) {
+      this.markerClusterer.removeMarkers( this.markers );
+      this.markerClusterer = null;
+    }
     for (let i = 0 ; i < this.markers.length; i++) {
-
       this.markers[i].setMap(null);
+      this.markers[i].unbindAll();
       this.markers[i] = null;
     }
     for (let i = 0 ; i < this.customMarkers.length; i++) {
@@ -178,8 +182,9 @@ GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
       this.customMarkers[i].setMap(null);
       this.customMarkers[i] = null;
     }
-    this.markers = [];
     this.customMarkers = [];
+    this.markers = [];
+
   }
 
   getLocations(textSearch: string) {
@@ -227,13 +232,12 @@ GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
                 if (this.cityCircle.getBounds().contains(coordenadas)
                   && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas)
                     <= this.cityCircle.getRadius()) {
-                      const marker = new google.maps.Marker({
-                      position: place.geometry.location,
-                      map: this.map
-                      });
-                      this.markers.push(marker);
+                      this.addMarker(place);
                 }
             }
+            this.markerClusterer = new MarkerClusterer(this.map, this.markers, {
+              imagePath: 'assets/clusterimages/m'
+            });
       }
     }
     );
@@ -262,12 +266,6 @@ searchCategory(categoryName: string) {
               if (this.cityCircle.getBounds().contains(coordenadas)
                 && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas)
                   <= this.cityCircle.getRadius()) {
-                    /*
-                    const marker = new google.maps.Marker({
-                    position: place.geometry.location,
-                    map: this.map
-                    });
-                    this.markers.push(marker);*/
                     this.addMarker(place);
               }
           }
@@ -304,16 +302,11 @@ addMarker(place: google.maps.places.PlaceResult) {
       });
   this.markersWithLabel.push(marker);*/
   this.markers.push(marker);
-  //const photoUrl = place.photos[0].getUrl({maxWidth: 400, maxHeight: 200});
   google.maps.event.addListener(marker, 'click', () => {
     this.infoWindow.close();
 
     const content = this.generateInfoWindowContent(place, marker);
-    this.infoWindow.setContent(content
-      //'<p>' + place.name + '</p>'
-    // +'<img src="' + photoUrl + '" </img>'
-    )
-    ;
+    this.infoWindow.setContent(content);
     this.infoWindow.open(this.map, marker);
     this.infoWindow.setOptions({maxWidth: 232} );
     google.maps.event.addListener(this.infoWindow, 'domready', () => {
