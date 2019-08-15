@@ -14,10 +14,10 @@ import { CommerceDetailInfo } from './commerce-detail-resolver.service';
 
 export class CommerceDetailPage implements OnInit {
   data: any;
-  activeCommerceExtraInfo: CommerceDetailInfo = { lat: null, lng: null , image: null, 
-                                         name: null, adress: null, website: null, phoneNumber: null,
-                                         postalCode: null, googleImagesUrl: []
-                                       };
+  activeCommerceExtraInfo: CommerceDetailInfo = { lat: null, lng: null , image: null,
+                                                  name: null, adress: null, website: null, phoneNumber: null,
+                                                  postalCode: null, googleImagesUrl: []
+                                                };
   activeGoogleCommerce: google.maps.places.PlaceResult;
 
 
@@ -35,7 +35,6 @@ export class CommerceDetailPage implements OnInit {
   ngOnInit() {
     this.activeGoogleCommerce = this.resultadosBusquedaService.activeGoogleCommerce;
     this.activeCommerceExtraInfo = this.route.snapshot.data['commerce'];
-
     console.log(this.activeCommerceExtraInfo);
   }
 
