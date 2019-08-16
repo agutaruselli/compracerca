@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-login',
@@ -16,9 +18,11 @@ export class LoginPage implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private authService: AuthenticationService,
-              public toastController: ToastController) { }
+              public toastController: ToastController,
+              public menuCtrl: MenuController) { }
 
   ngOnInit() {
+    this.menuCtrl.enable(false);
     this.loginForm = this.formBuilder.group({
       username : [null, Validators.required],
       password : [null, Validators.required]

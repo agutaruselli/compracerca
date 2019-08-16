@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 import { ToastController, AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -17,12 +18,16 @@ export class RegisterPage implements OnInit {
               private router: Router,
               private authService: AuthenticationService,
               public toastController: ToastController,
-              public alertController: AlertController) { }
+              public alertController: AlertController,
+              public menuCtrl: MenuController) { }
 
   ngOnInit() {
+    this.menuCtrl.enable(false);
     this.registerForm = this.formBuilder.group({
       username : [null, Validators.required],
-      password : [null, Validators.required]
+      password : [null, Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      rol: ['', Validators.required]
     });
   }
 
