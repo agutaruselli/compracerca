@@ -9,7 +9,7 @@
                 </ion-card-header>
                 <ion-card-content> -->
                   <ion-item>
-                    <ion-label position="floating"></ion-label>
+                    <ion-label position="floating">Username</ion-label>
                     <ion-input type="text" formControlName="username"></ion-input>
                   </ion-item>
                   <ion-item>
@@ -17,10 +17,10 @@
                     <ion-input type="password" formControlName="password"></ion-input>
                   </ion-item>
                   <ion-item lines="none" lines="full" padding-top>
-                    <ion-button expand="full" size="default" shape="round" color="success" type="submit" [disabled]="!loginForm.valid">Login</ion-button>
+                    <ion-button  full expand="full" size="default" color="success" type="submit" [disabled]="!loginForm.valid">Login</ion-button>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-button type="button" expand="full" size="default" shape="round" color="medium" (click)="register()">Register</ion-button>
+                    <ion-button  full type="button" expand="full" size="default"  color="medium" (click)="register()">Register</ion-button>
                   </ion-item>
                 <!-- </ion-card-content>
               </ion-card> -->
