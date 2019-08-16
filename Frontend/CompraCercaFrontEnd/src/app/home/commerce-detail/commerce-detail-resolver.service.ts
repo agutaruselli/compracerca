@@ -54,7 +54,7 @@ export class CommerceDetailResolverService implements Resolve<CommerceDetailInfo
             this.commerceDetailInfo.website = this.commerceDetailResult.website;
             if (this.commerceDetailResult.photos != null) {
               for(let photo of this.commerceDetailResult.photos) {
-                  this.commerceDetailInfo.googleImagesUrl.push(photo.getUrl({maxWidth: 300, maxHeight: 300}));
+                  this.commerceDetailInfo.googleImagesUrl.push(photo.getUrl({maxWidth: 500, maxHeight: 500}));
               }
 
             }
