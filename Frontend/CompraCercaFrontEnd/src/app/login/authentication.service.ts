@@ -19,6 +19,10 @@ export class AuthenticationService {
         catchError(this.handleError('login', []))
       );
   }
+   isAuthenticated(){
+    const token = localStorage.getItem('token');
+    return token != null;
+   }
 
   logout (): Observable<any> {
     return this.http.get<any>(this.apiUrl + 'signout')

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { CommerceDetailResolverService } from './home/commerce-detail/commerce-detail-resolver.service';
+import { RouteGuardService } from './login/route-guard.service';
+
 
 const routes: Routes = [
   {
@@ -10,7 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    loadChildren: './home/home.module#HomePageModule',
+    canActivate: [RouteGuardService]
   },
   {
     path: 'home/:categoryID',
@@ -38,7 +41,8 @@ const routes: Routes = [
   },
 
 
-  },  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './login/register/register.module#RegisterPageModule' }
 
 
