@@ -10,7 +10,12 @@ export interface ItemResponse {
   image: string;
   name: string;
   adress: string;
+  website: string;
+  phoneNumber: string;
+  postalCode: string;
 }
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -78,7 +83,7 @@ export class ResultadosBusquedaService {
     this.activeCompraCercaCommerce = commerce;
   }
   getActiveCompraCercaCommerce() {
-    return this.activeGoogleCommerce;
+    return this.activeCompraCercaCommerce;
   }
   getLocations(textSearch: string): Observable<ItemResponse[]> {
       return this.http.get<ItemResponse[]>(this.BASE_URL + this.LOCATIONS_URL).pipe(

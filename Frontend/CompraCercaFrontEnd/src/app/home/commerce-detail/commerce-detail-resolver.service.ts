@@ -37,7 +37,8 @@ export class CommerceDetailResolverService implements Resolve<CommerceDetailInfo
   async resolve(route: ActivatedRouteSnapshot): Promise<CommerceDetailInfo> {
       this.reloadCommerceDetail();
       if (this.resultadosBusquedaService.activeGoogleCommerce == null)  {
-          return null;
+          const itemResponse  = this.resultadosBusquedaService.getActiveCompraCercaCommerce();
+          this.parseItemResponseToCommerceDetailInfo(itemResponse);
       } else {
         /*const commerceIDAndType = route.data;
         const splitedData = commerceIDAndType.split(';');
@@ -53,27 +54,14 @@ export class CommerceDetailResolverService implements Resolve<CommerceDetailInfo
             this.commerceDetailInfo.adress = this.commerceDetailResult.formatted_address;
             this.commerceDetailInfo.website = this.commerceDetailResult.website;
             if (this.commerceDetailResult.photos != null) {
-              for(let photo of this.commerceDetailResult.photos) {
+              for(const photo of this.commerceDetailResult.photos) {
                   this.commerceDetailInfo.googleImagesUrl.push(photo.getUrl({maxWidth: 500, maxHeight: 500}));
               }
-
             }
-            const returnGoogle = this.commerceDetailInfo;
-            return returnGoogle;
           }
-        /*} else {
-          if (splitedData[1] === 'CompraCerca') {
-            const request = {
-              placeId: splitedData[0],
-              fields: ['photo', 'formatted_phone_number', 'international_phone_number', 'opening_hours', 'website']
-            };
-            const service = new google.maps.places.PlacesService(document.createElement('div'));
-            return null;
-          }
-        }*/
       }
-    //});
-     return null;
+      const retorno = this.commerceDetailInfo;
+      return retorno;
   }
 
   callGoogleDetails(service: google.maps.places.PlacesService, request: any): Promise<void> {
@@ -93,6 +81,15 @@ export class CommerceDetailResolverService implements Resolve<CommerceDetailInfo
     this.commerceDetailInfo = { lat: null, lng: null, image: null, name: null, 
       adress: null, website: null, phoneNumber: null,
       postalCode: null, googleImagesUrl: [] };
-  
+  }
+  parseItemResponseToCommerceDetailInfo(item: ItemResponse) {
+    this.commerceDetailInfo.name = item.name;
+    this.commerceDetailInfo.lat = item.lat;
+    this.commerceDetailInfo.lng = item.lng;
+    this.commerceDetailInfo.adress = item.adress;
+    this.commerceDetailInfo.website = item.website;
+    this.commerceDetailInfo.phoneNumber = item.phoneNumber;
+    this.commerceDetailInfo.postalCode = item.postalCode;
+    this.commerceDetailInfo.googleImagesUrl.push(item.image);
   }
 }

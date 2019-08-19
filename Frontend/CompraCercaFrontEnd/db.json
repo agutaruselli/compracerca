@@ -10,21 +10,31 @@
      "lng": 2,
      "image": "one",
      "name": "Lugar mock 1",
-     "adress": "Amazonas 1580"
+     "adress": "Amazonas 1580",
+     "website": "",
+     "postalCode": "AR1223, Montevideo Uruguay",
+     "phoneNumber": "098 337 534"
+
     },
     {
       "lat": 2,
       "lng": 3,
       "image": "two",
       "name": "Lugar mock 2",
-      "adress": "Amazonas 1580"
+      "adress": "Amazonas 1580",
+      "website": "",
+      "postalCode": "AR1223, Montevideo Uruguay",
+      "phoneNumber": "098 337 534"
      },
      {
       "lat": 4,
       "lng": 4,
       "image": "three",
       "name": "Lugar mock 3",
-      "adress": "Amazonas 1580"
+      "adress": "Amazonas 1580",
+      "website": "",
+      "postalCode": "AR1223, Montevideo Uruguay",
+      "phoneNumber": "098 337 534"
   	}
 ],
 

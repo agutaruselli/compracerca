@@ -28,6 +28,7 @@ export class CommerceDetailPage implements OnInit {
   };
 
 
+
   constructor(private route: ActivatedRoute, private router: Router, private resultadosBusquedaService: ResultadosBusquedaService ) {
 
 

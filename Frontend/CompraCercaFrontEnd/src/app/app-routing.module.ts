@@ -17,7 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'home/:categoryID',
-    loadChildren: './home/home.module#HomePageModule'
+    loadChildren: './home/home.module#HomePageModule',
+    canActivate: [RouteGuardService]
   },
   {
     path: 'list',
@@ -27,15 +28,20 @@ const routes: Routes = [
       children : [
         {
         path: '',
-        loadChildren: './categories/categories.module#CategoriesPageModule'
+        loadChildren: './categories/categories.module#CategoriesPageModule',
+        canActivate: [RouteGuardService]
+
         },
         {
         path: ':categoryID',
-        loadChildren: './categories/child-categories/child-categories.module#ChildCategoriesPageModule'
+        loadChildren: './categories/child-categories/child-categories.module#ChildCategoriesPageModule',
+        canActivate: [RouteGuardService]
         }
       ]
   },
   { path: 'commerce-detail/:id', loadChildren: './home/commerce-detail/commerce-detail.module#CommerceDetailPageModule',
+    canActivate: [RouteGuardService],
+
     resolve: {
     commerce: CommerceDetailResolverService
   },

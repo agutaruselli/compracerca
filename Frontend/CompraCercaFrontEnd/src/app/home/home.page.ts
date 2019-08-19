@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
-//import * as MarkerWithLabel from 'markerwithlabel';
+import * as MarkerWithLabel from 'markerwithlabel';
 
 import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
 
@@ -34,6 +34,9 @@ export class HomePage implements OnDestroy, OnInit {
   map: google.maps.Map;
   placesService: google.maps.places.PlacesService;
   placeSelected: google.maps.places.PlaceResult;
+  compraCercaSelected: ItemResponse = { lat: null, lng: null , image: null,
+    name: null, adress: null, website: null, phoneNumber: null,
+    postalCode: null};
   query = '';
   separatorCharacter = ';';
   places: any = [];
@@ -71,6 +74,9 @@ export class HomePage implements OnDestroy, OnInit {
     this.searchDisabled = true;
     this.saveDisabled = true;
     (window as any).angularComponent = { GoDetailGoogle: this.GoDetailGoogle, zone: ngZone };
+    (window as any).angularComponent = { GoDetailCompraCerca
+      : this.GoDetailGoogle, zone: ngZone };
+
     this.limpiarMapa();
   }
 
@@ -99,6 +105,13 @@ export class HomePage implements OnDestroy, OnInit {
 }*/
 GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
   this.resultadosBusquedaService.setActiveGoogleCommerce(this.placeSelected);
+  const commerceDetailParameters = this.placeSelected.id + this.separatorCharacter + 'Google';
+  this.router.navigate(['/commerce-detail', commerceDetailParameters]) ;
+});
+}
+
+GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
+  this.resultadosBusquedaService.setActiveCompraCercaCommerce(this.compraCercaSelected);
   const commerceDetailParameters = this.placeSelected.id + this.separatorCharacter + 'Google';
   this.router.navigate(['/commerce-detail', commerceDetailParameters]) ;
 });
@@ -168,7 +181,7 @@ GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
   }
 
   limpiarMapa() {
-    if(this.markerClusterer != null) {
+    if (this.markerClusterer != null) {
       this.markerClusterer.removeMarkers( this.markers );
       this.markerClusterer = null;
     }
@@ -276,6 +289,51 @@ searchCategory(categoryName: string) {
   }
   );
 }
+addCustomMarker(item: ItemResponse) {
+  const coordenadasCustom = new google.maps.LatLng(item.lat, item.lng);
+  /*const marker = new google.maps.Marker({
+    position: coordenadasCustom,
+    map: this.map,
+    label: {
+      text: item.name,
+      color: '#070606',
+      fontSize: '14px'
+    },
+    zIndex: this.zindex,
+    icon: this.iconoRegularMarkers,
+    fromGoogle: false
+    });*/
+  const marker = new MarkerWithLabel({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: coordenadasCustom,
+      //icon: markerIcon,
+      labelContent: item.name,
+      labelAnchor: new google.maps.Point(18, 12),
+      labelClass: 'my-custom-class-for-label', // the CSS class for the label
+      labelInBackground: true
+      });
+  this.markersWithLabel.push(marker);
+  this.customMarkers.push(marker);
+  google.maps.event.addListener(marker, 'click', () => {
+    this.infoWindow.close();
+
+    const content = this.generateInfoWindowCompraCercaContent(item, marker);
+    this.infoWindow.setContent(content);
+    this.infoWindow.open(this.map, marker);
+    this.infoWindow.setOptions({maxWidth: 232} );
+    google.maps.event.addListener(this.infoWindow, 'domready', () => {
+     /* var clickableItem = document.getElementById('clickableItem');
+      clickableItem.addEventListener('click', () => {
+        console.log('todos putos');
+      });*/
+    });
+  });
+  this.zindex++;
+}
+
+
+
 addMarker(place: google.maps.places.PlaceResult) {
   const marker = new google.maps.Marker({
     position: place.geometry.location,
@@ -317,6 +375,16 @@ addMarker(place: google.maps.places.PlaceResult) {
     });
   });
   this.zindex++;
+}
+
+generateInfoWindowCompraCercaContent(item: ItemResponse, marker: MarkerWithLabel): string {
+  const content = '<div id="iw-container">' + '<div class="iw-title">' + item.name + '</div>'
+                + '<div class="iw-subTitle">' + 'Dirección: <br> </div>'
+                + '<div class="iw-fieldInfo">' + item.adress + '</div></div>'
+                + '<ion-button expand="full" onclick="window.angularComponent.GoDetailCompraCerca(' +
+                ')">Ver perfil</ion-button>';
+                // '<h2 id="clickableItem"> Click me</h2>';
+  return content;
 }
 
 generateInfoWindowContent(place: google.maps.places.PlaceResult, marker: google.maps.Marker): string {
