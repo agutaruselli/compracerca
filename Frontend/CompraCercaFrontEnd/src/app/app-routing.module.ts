@@ -12,13 +12,15 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule',
-    canActivate: [RouteGuardService]
+    loadChildren: './home/home.module#HomePageModule'
+    // ,
+    // canActivate: [RouteGuardService]
   },
   {
     path: 'home/:categoryID',
-    loadChildren: './home/home.module#HomePageModule',
-    canActivate: [RouteGuardService]
+    loadChildren: './home/home.module#HomePageModule'
+    // ,
+    // canActivate: [RouteGuardService]
   },
   {
     path: 'list',
@@ -28,19 +30,23 @@ const routes: Routes = [
       children : [
         {
         path: '',
-        loadChildren: './categories/categories.module#CategoriesPageModule',
-        canActivate: [RouteGuardService]
+        loadChildren: './categories/categories.module#CategoriesPageModule'
+        // ,
+        // canActivate: [RouteGuardService]
 
         },
         {
         path: ':categoryID',
-        loadChildren: './categories/child-categories/child-categories.module#ChildCategoriesPageModule',
-        canActivate: [RouteGuardService]
+        loadChildren: './categories/child-categories/child-categories.module#ChildCategoriesPageModule'
+        // ,
+        // canActivate: [RouteGuardService]
         }
       ]
   },
-  { path: 'commerce-detail/:id', loadChildren: './home/commerce-detail/commerce-detail.module#CommerceDetailPageModule',
-    canActivate: [RouteGuardService],
+  { path: 'commerce-detail/:id', loadChildren: './home/commerce-detail/commerce-detail.module#CommerceDetailPageModule'
+    // ,
+    // canActivate: [RouteGuardService]
+    ,
 
     resolve: {
     commerce: CommerceDetailResolverService
@@ -48,6 +54,18 @@ const routes: Routes = [
 
 
   },
+  { path: 'commerce-detail', loadChildren: './home/commerce-detail/commerce-detail.module#CommerceDetailPageModule'
+    // ,
+    // canActivate: [RouteGuardService]
+    ,
+
+    resolve: {
+    commerce: CommerceDetailResolverService
+  },
+
+
+  },
+
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './login/register/register.module#RegisterPageModule' }
 

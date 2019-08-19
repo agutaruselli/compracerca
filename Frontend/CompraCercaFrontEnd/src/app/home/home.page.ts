@@ -73,9 +73,8 @@ export class HomePage implements OnDestroy, OnInit {
               private categoriesService: CategoriesService, public ngZone: NgZone, private router: Router ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
-    (window as any).angularComponent = { GoDetailGoogle: this.GoDetailGoogle, zone: ngZone };
-    (window as any).angularComponent = { GoDetailCompraCerca
-      : this.GoDetailGoogle, zone: ngZone };
+    (window as any).angularComponent = { GoDetailGoogle: this.GoDetailGoogle, GoDetailCompraCerca: this.GoDetailCompraCerca, zone: ngZone };
+   // (window as any).angularComponent = { GoDetailCompraCerca: this.GoDetailCompraCerca, zone: ngZone };
 
     this.limpiarMapa();
   }
@@ -112,8 +111,7 @@ GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
 
 GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
   this.resultadosBusquedaService.setActiveCompraCercaCommerce(this.compraCercaSelected);
-  const commerceDetailParameters = this.placeSelected.id + this.separatorCharacter + 'Google';
-  this.router.navigate(['/commerce-detail', commerceDetailParameters]) ;
+  this.router.navigate(['/commerce-detail']) ;
 });
 }
   initMap() {
@@ -210,12 +208,13 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
           if (this.cityCircle.getBounds().contains(coordenadasCustom)
           && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadasCustom)
             <= this.cityCircle.getRadius()) {
-              const marker = new google.maps.Marker({
+              /*const marker = new google.maps.Marker({
                 position: coordenadasCustom,
                 map: this.map,
                 icon: this.iconoCustomMarkers
                 });
-              this.customMarkers.push(marker);
+              this.customMarkers.push(marker); */
+              this.addCustomMarker(item);
             }
         }
       });

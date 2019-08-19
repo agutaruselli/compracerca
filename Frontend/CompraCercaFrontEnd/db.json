@@ -6,34 +6,34 @@
 ],
 "posts": [
     {
-     "lat": 1,
-     "lng": 2,
-     "image": "one",
+     "lat": -34.886298,
+     "lng": -56.118325,
+     "image": "C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/src/assets/commerceIMGs/papelería-y-libros.jpg",
      "name": "Lugar mock 1",
-     "adress": "Amazonas 1580",
-     "website": "",
+     "adress": "18 de julio 1923",
+     "website": "www.mock1.com.uy",
      "postalCode": "AR1223, Montevideo Uruguay",
      "phoneNumber": "098 337 534"
 
     },
     {
-      "lat": 2,
-      "lng": 3,
-      "image": "two",
+      "lat": -59.891598,
+      "lng": -56.118542,
+      "image": "C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/src/assets/commerceIMGs/Levis-store.jpg",
       "name": "Lugar mock 2",
-      "adress": "Amazonas 1580",
-      "website": "",
-      "postalCode": "AR1223, Montevideo Uruguay",
+      "adress": "Goes 2312",
+      "website": "www.mock2.com.uy",
+      "postalCode": "AR126345, Montevideo Uruguay",
       "phoneNumber": "098 337 534"
      },
      {
       "lat": 4,
       "lng": 4,
-      "image": "three",
+      "image": "C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/src/assets/commerceIMGs/bar-store.jpg",
       "name": "Lugar mock 3",
       "adress": "Amazonas 1580",
-      "website": "",
-      "postalCode": "AR1223, Montevideo Uruguay",
+      "website": "www.mock3.com.uy",
+      "postalCode": "AR122352, Montevideo Uruguay",
       "phoneNumber": "098 337 534"
   	}
 ],

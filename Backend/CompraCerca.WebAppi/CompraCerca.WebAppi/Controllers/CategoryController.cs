@@ -17,6 +17,7 @@ namespace CompraCerca.WebAppi.Controllers
         [HttpGet("categories")]
         public IActionResult GetCategories()
         {
+
             CategoryDto a = new CategoryDto()
             {
                 id = 1,
