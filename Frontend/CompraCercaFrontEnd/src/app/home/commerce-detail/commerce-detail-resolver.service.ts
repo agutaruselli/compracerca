@@ -53,6 +53,8 @@ export class CommerceDetailResolverService implements Resolve<CommerceDetailInfo
             this.commerceDetailInfo.phoneNumber = this.commerceDetailResult.formatted_phone_number;
             this.commerceDetailInfo.adress = this.commerceDetailResult.formatted_address;
             this.commerceDetailInfo.website = this.commerceDetailResult.website;
+            this.commerceDetailInfo.name = this.resultadosBusquedaService.activeGoogleCommerce.name;
+            this.commerceDetailInfo.postalCode = this.resultadosBusquedaService.activeGoogleCommerce.adr_address;
             if (this.commerceDetailResult.photos != null) {
               for(const photo of this.commerceDetailResult.photos) {
                   this.commerceDetailInfo.googleImagesUrl.push(photo.getUrl({maxWidth: 500, maxHeight: 500}));

@@ -34,11 +34,9 @@ export class CommerceDetailPage implements OnInit {
 
   }
   ngOnInit() {
-    this.activeGoogleCommerce = this.resultadosBusquedaService.activeGoogleCommerce;
-    this.activeCommerceExtraInfo = this.route.snapshot.data['commerce'];
-    console.log(this.activeCommerceExtraInfo);
+        this.activeCommerceExtraInfo = this.route.snapshot.data['commerce'];
+        console.log(this.activeCommerceExtraInfo);
   }
-
 
 
 }

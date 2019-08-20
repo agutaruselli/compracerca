@@ -377,6 +377,7 @@ addMarker(place: google.maps.places.PlaceResult) {
 }
 
 generateInfoWindowCompraCercaContent(item: ItemResponse, marker: MarkerWithLabel): string {
+  this.compraCercaSelected = item;
   const content = '<div id="iw-container">' + '<div class="iw-title">' + item.name + '</div>'
                 + '<div class="iw-subTitle">' + 'Dirección: <br> </div>'
                 + '<div class="iw-fieldInfo">' + item.adress + '</div></div>'
