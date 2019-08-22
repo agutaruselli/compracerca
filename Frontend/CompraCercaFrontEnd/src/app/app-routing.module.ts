@@ -67,7 +67,8 @@ const routes: Routes = [
   },
 
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'register', loadChildren: './login/register/register.module#RegisterPageModule' }
+  { path: 'register', loadChildren: './login/register/register.module#RegisterPageModule' },  { path: 'dashboard-cc', loadChildren: './dashboard-cc/dashboard-cc.module#DashboardCCPageModule' }
+
 
 
 ];

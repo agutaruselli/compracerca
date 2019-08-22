@@ -62,8 +62,8 @@ export class CommerceDetailResolverService implements Resolve<CommerceDetailInfo
             }
           }
       }
-      const retorno = this.commerceDetailInfo;
-      return retorno;
+      //const retorno = this.commerceDetailInfo;
+      return this.commerceDetailInfo;
   }
 
   callGoogleDetails(service: google.maps.places.PlacesService, request: any): Promise<void> {

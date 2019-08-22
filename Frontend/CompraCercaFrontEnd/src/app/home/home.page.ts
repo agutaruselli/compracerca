@@ -57,6 +57,11 @@ export class HomePage implements OnDestroy, OnInit {
     scaledSize: new google.maps.Size(30, 30),
     labelOrigin: new google.maps.Point(0, -10)
    };
+   iconoCompraCerca = {
+    url: 'assets/icon/CustomMArkerer3.svg',
+    scaledSize: new google.maps.Size(30, 30),
+    labelOrigin: new google.maps.Point(0, -10)
+  };
    infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
   respuestasCompraCerca: ItemResponse[] =  [];
   cityCircle: google.maps.Circle = new google.maps.Circle({
@@ -123,7 +128,180 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
       this.puntero =  new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       this.map = new google.maps.Map(this.mapElement.nativeElement, {
         center: pos,
-        zoom: 15
+        zoom: 15,
+        styles:  [
+          {
+              'featureType': 'landscape.natural',
+              'elementType': 'geometry.fill',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  },
+                  {
+                      'color': '#eafafd'
+                  }
+              ]
+          },
+          {
+              'featureType': 'landscape.natural.landcover',
+              'elementType': 'geometry.fill',
+              'stylers': [
+                  {
+                      'color': '#b5fc68'
+                  },
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'landscape.natural.terrain',
+              'elementType': 'geometry.fill',
+              'stylers': [
+                  {
+                      'color': '#c1ff57'
+                  }
+              ]
+          },
+          {
+              'featureType': 'poi',
+              'elementType': 'geometry.fill',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  },
+                  {
+                      'hue': '#1900ff'
+                  },
+                  {
+                      'color': '#c0e8e8'
+                  }
+              ]
+          },
+          {
+              'featureType': 'poi.attraction',
+              'elementType': 'labels',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'poi.business',
+              'elementType': 'labels.text',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'poi.business',
+              'elementType': 'labels.icon',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'poi.park',
+              'elementType': 'geometry.fill',
+              'stylers': [
+                  {
+                      'color': '#d4f77d'
+                  }
+              ]
+          },
+          {
+              'featureType': 'road',
+              'elementType': 'geometry',
+              'stylers': [
+                  {
+                      'lightness': 100
+                  },
+                  {
+                      'visibility': 'simplified'
+                  }
+              ]
+          },
+          {
+              'featureType': 'road',
+              'elementType': 'labels',
+              'stylers': [
+                  {
+                      'visibility': 'off'
+                  }
+              ]
+          },
+          {
+              'featureType': 'road',
+              'elementType': 'labels.text',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'road.highway',
+              'elementType': 'labels.text',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'road.highway.controlled_access',
+              'elementType': 'labels.text',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'road.arterial',
+              'elementType': 'labels.text',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'road.local',
+              'elementType': 'labels.text',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  }
+              ]
+          },
+          {
+              'featureType': 'transit.line',
+              'elementType': 'geometry',
+              'stylers': [
+                  {
+                      'visibility': 'on'
+                  },
+                  {
+                      'lightness': 700
+                  }
+              ]
+          },
+          {
+              'featureType': 'water',
+              'elementType': 'all',
+              'stylers': [
+                  {
+                      'color': '#7dcdcd'
+                  }
+              ]
+          }
+      ]
         });
       const icono = {
         url: 'assets/icon/posicion_actual.svg',
@@ -306,9 +484,9 @@ addCustomMarker(item: ItemResponse) {
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: coordenadasCustom,
-      //icon: markerIcon,
+      icon: this.iconoCompraCerca,
       labelContent: item.name,
-      labelAnchor: new google.maps.Point(18, 12),
+      labelAnchor: new google.maps.Point(60, 57),
       labelClass: 'my-custom-class-for-label', // the CSS class for the label
       labelInBackground: true
       });

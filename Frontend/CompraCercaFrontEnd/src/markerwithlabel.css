@@ -1,17 +1,88 @@
-.my-custom-class-for-label {
-width: 50px; height: 20px;
-  
-  border: 1px solid #eb3a44;
-  border-radius: 5px;
-  
-  background: #fee1d7;
-  color: #eb3a44;
-  text-align: center;
-  line-height: 20px;
-  
-  font-weight: bold;
-  font-size: 14px;
+.lab {
+	color: black;
+	background-color: #2cdb6f;
+	font-family: "Roboto";
+	font-size: 14px;
+	text-align: center;
+
 }
+.my-custom-class-for-label {
+	font-family: "Roboto";
+	font-size: 14px;
+	box-sizing:border-box;
+	/* background: #05F24C; */
+	color: black;
+	background: rgba(7, 216, 42, 0.9); 
+	box-shadow: 2px 2px 4px #333;	
+	border-radius: 2px;
+	-webkit-animation: pulse 1s ease 1s 1;
+	-moz-animation: pulse 1s ease 1s 1;
+	animation: pulse 1s ease 1s 1;
+	padding: 3px;
+  }
+  
+  /* ANIMATIONS */
+  @-webkit-keyframes pulse {
+   50% {
+	  -webkit-transform: scale(2);
+	  -moz-transform: scale(2);
+	  transform: scale(2);
+	}
+  
+	100% {
+	  -webkit-transform: scale(1);
+	  -moz-transform: scale(1);
+	  transform: scale(1);
+	}
+  }
+  @-moz-keyframes pulse {
+   50% {
+	  -webkit-transform: scale(2);
+	  -moz-transform: scale(2);
+	  transform: scale(2);
+	}
+  
+	100% {
+	  -webkit-transform: scale(1);
+	  -moz-transform: scale(1);
+	  transform: scale(1);
+	}
+  }
+  @keyframes pulse {
+	50% {
+	  -webkit-transform: scale(2);
+	  -moz-transform: scale(2);
+	  transform: scale(2);
+	}
+  
+	100% {
+	  -webkit-transform: scale(1);
+	  -moz-transform: scale(1);
+	  transform: scale(1);
+	}
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #iw-container {
 	margin-bottom: 10px;
 }
