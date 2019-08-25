@@ -15,4 +15,11 @@
     <Folder Include="Filters\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CompraCerca.BusinessLogic.Interface\CompraCerca.BusinessLogic.Interface.csproj" />
+    <ProjectReference Include="..\CompraCerca.DataAccess\CompraCerca.DataAccess.csproj" />
+    <ProjectReference Include="..\CompraCerca.Domain\CompraCerca.Domain.csproj" />
+    <ProjectReference Include="..\CompraCerca.ServiceFactory\CompraCerca.ServiceFactory.csproj" />
+  </ItemGroup>
+
 </Project>

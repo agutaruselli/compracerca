@@ -8,13 +8,11 @@
     <ProjectReference Include="..\CompraCerca.BusinessLogic.Interface\CompraCerca.BusinessLogic.Interface.csproj" />
     <ProjectReference Include="..\CompraCerca.DataAccess.Interface\CompraCerca.DataAccess.Interface.csproj" />
     <ProjectReference Include="..\CompraCerca.Domain\CompraCerca.Domain.csproj" />
-    <ProjectReference Include="..\CompraCerca.Exception\CompraCerca.Exceptions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ClassHelpers\" />
-    <Folder Include="ValidatorHelpers\" />
-    <Folder Include="Services\" />
+    <Folder Include="ValidatorEntitiesHelpers\" />
   </ItemGroup>
 
 </Project>

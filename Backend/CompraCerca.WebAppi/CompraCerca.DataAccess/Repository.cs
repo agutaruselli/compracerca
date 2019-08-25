@@ -32,7 +32,7 @@ namespace Report.DataAccess
             return Context.Set<T>().First(expression);
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             Context.Set<T>().Add(entity);
             this.Save();

@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.DataAccess.Inte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.Domain", "CompraCerca.Domain\CompraCerca.Domain.csproj", "{D668F8EA-8C97-41B3-8599-3CE8576D234E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.Exceptions", "CompraCerca.Exception\CompraCerca.Exceptions.csproj", "{69B1F55F-2E84-466D-8045-5A42A3ED6886}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.ServiceFactory", "CompraCerca.ServiceFactory\CompraCerca.ServiceFactory.csproj", "{8DC8821F-F147-4A62-9F9E-919E730B011C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.Tests", "CompraCerca.Tests\CompraCerca.Tests.csproj", "{E64EDDAA-D862-44FD-8812-6B40903E5D52}"
@@ -51,10 +49,6 @@ Global
 		{D668F8EA-8C97-41B3-8599-3CE8576D234E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D668F8EA-8C97-41B3-8599-3CE8576D234E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D668F8EA-8C97-41B3-8599-3CE8576D234E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69B1F55F-2E84-466D-8045-5A42A3ED6886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69B1F55F-2E84-466D-8045-5A42A3ED6886}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69B1F55F-2E84-466D-8045-5A42A3ED6886}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69B1F55F-2E84-466D-8045-5A42A3ED6886}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DC8821F-F147-4A62-9F9E-919E730B011C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DC8821F-F147-4A62-9F9E-919E730B011C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DC8821F-F147-4A62-9F9E-919E730B011C}.Release|Any CPU.ActiveCfg = Release|Any CPU
