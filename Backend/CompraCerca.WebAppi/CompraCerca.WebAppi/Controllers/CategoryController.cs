@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CompraCerca.BusinessLogic.Interface;
+using CompraCerca.Domain;
 using CompraCerca.WebAppi.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,32 +14,25 @@ namespace CompraCerca.WebAppi.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
+        private ICategoryService CategoryService;
+
+        public CategoryController(ICategoryService categoryService)
+        {
+            this.CategoryService = categoryService;
+        }
+
         // GET api/category/
         //On this first call we get all the father categories
         [HttpGet("categories")]
         public IActionResult GetCategories()
         {
-
-            CategoryDto a = new CategoryDto()
-            {
-                id = 1,
-                father = 0,
-                name = "Servicios"
-            };
-            CategoryDto b = new CategoryDto()
-            {
-                id = 2,
-                father = 0,
-                name = "Automoviles"
-            };
-            CategoryDto c = new CategoryDto()
-            {
-                id = 3,
-                father = 0,
-                name = "Hogar"
-            };
-            List<CategoryDto> padres = new List<CategoryDto>() { a, b, c };
-            return Ok(padres);
+            List<Category> categories =  CategoryService.GetCategories().ToList();
+            List<CategoryDto> categoriesDto = new List<CategoryDto>();
+            foreach (Category category in categories) {
+                CategoryDto categoryDto = new CategoryDto();
+                categoriesDto.Add(categoryDto.GetCategoryDtoFromCategory(category));
+            }
+            return Ok(categoriesDto);
         }
 
 
@@ -45,34 +40,33 @@ namespace CompraCerca.WebAppi.Controllers
         //On this call we get the info about this category and their
         //next sons
         [HttpGet("categories/{id}")]
-        public IActionResult GetCategory()
+        public IActionResult GetSubCategory(int id)
         {
-            CategoryDto a = new CategoryDto()
+            List<Category> categories = CategoryService.GetSubCategories(id).ToList();
+            List<CategoryDto> categoriesDto = new List<CategoryDto>();
+            foreach (Category category in categories)
             {
-                id = 4,
-                father = 1,
-                name = "Tinorerias"
-            };
-            CategoryDto b = new CategoryDto()
-            {
-                id = 5,
-                father = 1,
-                name = "Vidrerias"
-            };
-            CategoryDto c = new CategoryDto()
-            {
-                id = 6,
-                father = 1,
-                name = "Whiskeria"
-            };
+                CategoryDto categoryDto = new CategoryDto();
+                categoriesDto.Add(categoryDto.GetCategoryDtoFromCategory(category));
+            }
+            return Ok(categoriesDto);
+        }
 
-           
 
-            List<CategoryDto> subCategories = new List<CategoryDto>()
+        [HttpGet("init")]
+        public IActionResult GetInit()
+        {
+            try
             {
-                a,b,c
-            };
-            return Ok(subCategories);
+                //CategoryService.initiateCategories();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+            }
+            
         }
     }
 }

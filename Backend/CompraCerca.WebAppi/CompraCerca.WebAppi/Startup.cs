@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CompraCerca.BusinessLogic.Interface;
+using CompraCerca.DataAccess;
+using CompraCerca.DataAccess.Interface;
+using CompraCerca.Domain;
+using CompraCerca.ServiceFactory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,6 +32,17 @@ namespace CompraCerca.WebAppi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddDbContext<DbContext, CompraCercaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:CompraCercaDB"]));
+            string businessLogicAssemblyPath = Configuration.GetValue<string>("Assemblies:BusinessLogic");
+            string dataAccessAssemblyPath = Configuration.GetValue<string>("Assemblies:DataAccess");
+
+            services.AddLogic<IBusinessService>(businessLogicAssemblyPath);
+            services.AddLogic<ICategoryService>(businessLogicAssemblyPath);
+
+            services.AddRepository<IRepository<Category>>(dataAccessAssemblyPath);
+            services.AddRepository<IRepository<Business>>(dataAccessAssemblyPath);
+            services.AddRepository(typeof(IRepository<>), dataAccessAssemblyPath);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

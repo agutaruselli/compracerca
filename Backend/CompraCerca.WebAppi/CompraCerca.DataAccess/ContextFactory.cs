@@ -32,14 +32,14 @@ namespace CompraCerca.DataAccess
 
         private static DbContextOptions GetMemoryConfig(DbContextOptionsBuilder builder)
         {
-            builder.UseInMemoryDatabase("NOMBRE DE NUESTRA DB");
+            builder.UseInMemoryDatabase("NAME OF OUR DB");
             return builder.Options;
         }
 
         private static DbContextOptions GetSqlConfig(DbContextOptionsBuilder builder)
         {
             
-            builder.UseSqlServer(@"server=.;initial catalog=ReportDB;Integrated Security=true");
+            builder.UseSqlServer(@"server=.;initial catalog=CompraCercaDB;Integrated Security=true");
             return builder.Options;
         }
     }

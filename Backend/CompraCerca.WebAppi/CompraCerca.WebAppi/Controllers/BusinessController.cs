@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CompraCerca.Domain;
 using CompraCerca.WebAppi.DTOs;
+using CompraCerca.BusinessLogic.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompraCerca.WebAppi.Controllers
@@ -11,87 +13,58 @@ namespace CompraCerca.WebAppi.Controllers
     [ApiController]
     public class BusinessController : ControllerBase
     {
+        private IBusinessService businessService;
+
+        public BusinessController(IBusinessService businessService) {
+            this.businessService = businessService;
+        }
 
         // GET api/Business/product
         [HttpGet("category/{id}")]
-        public IActionResult GetBusinessMatchFromCategories()
+        public IActionResult GetBusinessMatchFromCategories(int id)
         {
-            BusinessDto a = new BusinessDto()
-            {
-                latitude = 34.45666,
-                longitude = 56.4444,
-                adress = "Avenida siempre viva 123",
-                name = "el bar de juan"
-            };
+            List<Business> businesses = businessService.GetBusinessFromCategories(id).ToList();
+            List<BusinessDto> businessDtos = new List<BusinessDto>();
 
-            BusinessDto b = new BusinessDto()
-            {
-                latitude = 34.45666,
-                longitude = 56.4444,
-                adress = "Avenida de los libertadores 123",
-                name = "el bar del pepe"
-            };
+            foreach (Business business in businesses) {
+                BusinessDto businessDto = new BusinessDto();
 
-            BusinessDto c = new BusinessDto()
-            {
-                latitude = 34.45666,
-                longitude = 56.4444,
-                adress = "Avenida 123",
-                name = "el bar ameno"
-            };
+                businessDtos.Add(businessDto.GetBusinessDtoFromBusiness(business));
+            }
 
-            List<BusinessDto> businesses = new List<BusinessDto>();
-            return Ok(businesses);
+            return Ok(businessDtos);
         }
 
         // GET api/Business/product
         [HttpGet("product/{product}")]
-        public IActionResult GetBusinessMatchFromProduct()
+        public IActionResult GetBusinessMatchFromProduct(string product)
         {
-            BusinessDto a = new BusinessDto()
-            {
-                latitude = 34.45666,
-                longitude = 56.4444,
-                adress = "Avenida siempre viva 123",
-                name = "el bar de juan"
-            };
+            List<Business> businesses = businessService.GetBusinessFromProduct(product).ToList();
+            List<BusinessDto> businessDtos = new List<BusinessDto>();
 
-            BusinessDto b = new BusinessDto()
+            foreach (Business business in businesses)
             {
-                latitude = 34.45666,
-                longitude = 56.4444,
-                adress = "Avenida de los libertadores 123",
-                name = "el bar del pepe"
-            };
+                BusinessDto businessDto = new BusinessDto();
 
-            BusinessDto c = new BusinessDto()
-            {
-                latitude = 34.45666,
-                longitude = 56.4444,
-                adress = "Avenida 123",
-                name = "el bar ameno"
-            };
-
-            List<BusinessDto> businesses = new List<BusinessDto>();
-            return Ok(businesses);
+                businessDtos.Add(businessDto.GetBusinessDtoFromBusiness(business));
+            }
+            return Ok(businessDtos);
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("init")]
+        public IActionResult GetInit()
         {
-        }
+            try
+            {
+               // businessService.initiateBusiness();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+                return BadRequest(ex);
+            }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
