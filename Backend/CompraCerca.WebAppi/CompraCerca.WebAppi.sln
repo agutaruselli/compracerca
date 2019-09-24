@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.ServiceFactory"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraCerca.Tests", "CompraCerca.Tests\CompraCerca.Tests.csproj", "{E64EDDAA-D862-44FD-8812-6B40903E5D52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.WebServices.Interface", "CompraCerca.WebServices.Interface\CompraCerca.WebServices.Interface.csproj", "{10B27D5A-CAF2-44DD-9A31-4FB9FCC38CC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompraCerca.WebServices", "CompraCerca.WebServices\CompraCerca.WebServices.csproj", "{D66824FA-1B6C-4DC9-BCF5-536718B84C3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,14 @@ Global
 		{E64EDDAA-D862-44FD-8812-6B40903E5D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E64EDDAA-D862-44FD-8812-6B40903E5D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E64EDDAA-D862-44FD-8812-6B40903E5D52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10B27D5A-CAF2-44DD-9A31-4FB9FCC38CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10B27D5A-CAF2-44DD-9A31-4FB9FCC38CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10B27D5A-CAF2-44DD-9A31-4FB9FCC38CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10B27D5A-CAF2-44DD-9A31-4FB9FCC38CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D66824FA-1B6C-4DC9-BCF5-536718B84C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D66824FA-1B6C-4DC9-BCF5-536718B84C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D66824FA-1B6C-4DC9-BCF5-536718B84C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D66824FA-1B6C-4DC9-BCF5-536718B84C3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

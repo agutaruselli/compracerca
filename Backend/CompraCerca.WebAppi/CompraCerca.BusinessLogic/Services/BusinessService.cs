@@ -1,6 +1,7 @@
 ﻿using CompraCerca.BusinessLogic.Interface;
 using CompraCerca.DataAccess.Interface;
 using CompraCerca.Domain;
+using CompraCerca.WebServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,10 @@ namespace CompraCerca.BusinessLogic.Services
         public ICollection<Business> GetBusinessFromProduct(string product)
         {
 
-            //Todo: here we call the web service
+            PredictCategory pCateg = new PredictCategory();
+            Category categoryPredicted = pCateg.GetCategory(product);
 
-            throw new NotImplementedException();
+            return this.GetBusinessFromCategories(categoryPredicted.Id);
         }
 
         public void initiateBusiness()

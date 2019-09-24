@@ -8,6 +8,7 @@
     <ProjectReference Include="..\CompraCerca.BusinessLogic.Interface\CompraCerca.BusinessLogic.Interface.csproj" />
     <ProjectReference Include="..\CompraCerca.DataAccess.Interface\CompraCerca.DataAccess.Interface.csproj" />
     <ProjectReference Include="..\CompraCerca.Domain\CompraCerca.Domain.csproj" />
+    <ProjectReference Include="..\CompraCerca.WebServices\CompraCerca.WebServices.csproj" />
   </ItemGroup>
 
   <ItemGroup>
