@@ -22,7 +22,10 @@ export class CategoriesPage implements OnInit {
       this.fatherCategories = res;
       console.log(res);
     });
+   /*
+   this.categoriesService.getBackendCategories().subscribe( (res: string) => {
+        console.log(res);
+    });
+  }*/
   }
-
-
 }

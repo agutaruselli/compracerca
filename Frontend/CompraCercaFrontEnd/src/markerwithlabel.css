@@ -1,0 +1,46 @@
+.my-custom-class-for-label {
+width: 50px; height: 20px;
+  
+  border: 1px solid #eb3a44;
+  border-radius: 5px;
+  
+  background: #fee1d7;
+  color: #eb3a44;
+  text-align: center;
+  line-height: 20px;
+  
+  font-weight: bold;
+  font-size: 14px;
+}
+#iw-container {
+	margin-bottom: 10px;
+}
+#iw-container .iw-title {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 22px;
+	font-weight: 400;
+	padding: 10px;
+	background-color: #2cdb6f;
+	color: white;
+	margin: 0;
+	border-radius: 2px 2px 0 0;
+}
+#iw-container .iw-content {
+	font-size: 13px;
+	line-height: 18px;
+	font-weight: 400;
+	margin-right: 1px;
+	padding: 15px 5px 20px 15px;
+	max-height: 140px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.iw-subTitle {
+	font-size: 16px;
+	font-weight: 400;
+	padding: 7px 0;
+}
+.iw-fieldInfo {
+	font-size: 14px;
+	font-weight: 300;
+}

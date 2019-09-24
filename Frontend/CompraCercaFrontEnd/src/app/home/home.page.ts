@@ -1,13 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, NgZone   } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ResultadosBusquedaService } from './resultados-busqueda.service';
 import { ItemResponse } from './resultados-busqueda.service';
 import { Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
+//import * as MarkerWithLabel from 'markerwithlabel';
+
 import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
+
+declare const google: any;
 declare var MarkerClusterer: any;
+
+export interface CommerceResult {
+  id: string;
+  fromGoogle: boolean;
+}
+
 
 
 @Component({
@@ -22,7 +33,9 @@ export class HomePage implements OnDestroy, OnInit {
   longitude: number;
   map: google.maps.Map;
   placesService: google.maps.places.PlacesService;
+  placeSelected: google.maps.places.PlaceResult;
   query = '';
+  separatorCharacter = ';';
   places: any = [];
   searchDisabled: boolean;
   saveDisabled: boolean;
@@ -30,10 +43,16 @@ export class HomePage implements OnDestroy, OnInit {
   categorySearch: CategoryResponse = { father: null, id: null , name: null };
   puntero: google.maps.LatLng = new google.maps.LatLng(0, 0) ;
   markers: google.maps.Marker [] = [];
+  markersWithLabel: any [] = [];
   customMarkers: google.maps.Marker [] = [];
   iconoCustomMarkers = {
     url: 'assets/icon/marcadores_compraCerca.svg',
     scaledSize: new google.maps.Size(30, 30)
+   };
+   iconoRegularMarkers = {
+    url: 'assets/icon/marker.svg',
+    scaledSize: new google.maps.Size(30, 30),
+    labelOrigin: new google.maps.Point(0, -10)
    };
    infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
   respuestasCompraCerca: ItemResponse[] =  [];
@@ -48,10 +67,13 @@ export class HomePage implements OnDestroy, OnInit {
 
 
   constructor(private resultadosBusquedaService: ResultadosBusquedaService, private activatedRoute: ActivatedRoute, 
-              private categoriesService: CategoriesService) {
+              private categoriesService: CategoriesService, public ngZone: NgZone, private router: Router ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
+    (window as any).angularComponent = { GoDetailGoogle: this.GoDetailGoogle, zone: ngZone };
+    this.limpiarMapa();
   }
+
   ngOnInit()  {
     this.initMap();
   }
@@ -60,7 +82,27 @@ export class HomePage implements OnDestroy, OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+  /*
+  GoDetailGoogle = (idCommerce: string, isFromGoogle: boolean) => { this.ngZone.run(() => {
 
+    const commerceSelected = {
+      id: idCommerce,
+      fromGoogle: isFromGoogle
+    };
+    const navigationExtras: NavigationExtras = {
+      state: {
+        commerce: commerceSelected
+      }
+    };
+    this.router.navigate(['/categories'], navigationExtras) ;
+  });
+}*/
+GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
+  this.resultadosBusquedaService.setActiveGoogleCommerce(this.placeSelected);
+  const commerceDetailParameters = this.placeSelected.id + this.separatorCharacter + 'Google';
+  this.router.navigate(['/commerce-detail', commerceDetailParameters]) ;
+});
+}
   initMap() {
     navigator.geolocation.getCurrentPosition((position) => {
       const pos = {
@@ -106,7 +148,17 @@ export class HomePage implements OnDestroy, OnInit {
           this.searchCategory(this.categorySearch.name);
         });
       });
-
+      /*const marker = new MarkerWithLabel({
+        map: this.map,
+        animation: google.maps.Animation.DROP,
+        position: this.puntero,
+        icon: this.iconoCustomMarkers,
+        labelContent: 'Hey dj toma la disco',
+        labelAnchor: new google.maps.Point(18, 12),
+        labelClass: 'my-custom-class-for-label', // the CSS class for the label
+        labelInBackground: true,
+        labelStyle: {opacity: 0.75}
+        });*/
   });
  }
 
@@ -198,6 +250,7 @@ searchCategory(categoryName: string) {
   this.getLocations(categoryName);
   const service = new google.maps.places.PlacesService(this.map);
   service.textSearch(request, (results, status) => {
+        console.log(results);
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           for (const result of results) {
               const place = result;
@@ -229,18 +282,68 @@ addMarker(place: google.maps.places.PlaceResult) {
   const marker = new google.maps.Marker({
     position: place.geometry.location,
     map: this.map,
-    label: place.name,
-    zIndex: this.zindex
+    label: {
+      text: place.name,
+      color: '#070606',
+      fontSize: '14px'
+    },
+    zIndex: this.zindex,
+    icon: this.iconoRegularMarkers,
+    id: place.place_id,
+    fromGoogle: true
     });
+  /*const marker = new MarkerWithLabel({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: place.geometry.location,
+      //icon: markerIcon,
+      labelContent: place.name,
+      labelAnchor: new google.maps.Point(18, 12),
+      labelClass: 'my-custom-class-for-label', // the CSS class for the label
+      labelInBackground: true
+      });
+  this.markersWithLabel.push(marker);*/
   this.markers.push(marker);
+  //const photoUrl = place.photos[0].getUrl({maxWidth: 400, maxHeight: 200});
   google.maps.event.addListener(marker, 'click', () => {
-    this.infoWindow.setContent('<p>' + place.name + '</p>' +
-    '<img src="' + place.icon + '" </img>');
     this.infoWindow.close();
+
+    const content = this.generateInfoWindowContent(place, marker);
+    this.infoWindow.setContent(content
+      //'<p>' + place.name + '</p>'
+    // +'<img src="' + photoUrl + '" </img>'
+    )
+    ;
     this.infoWindow.open(this.map, marker);
+    this.infoWindow.setOptions({maxWidth: 232} );
+    google.maps.event.addListener(this.infoWindow, 'domready', () => {
+     /* var clickableItem = document.getElementById('clickableItem');
+      clickableItem.addEventListener('click', () => {
+        console.log('todos putos');
+      });*/
+    });
   });
   this.zindex++;
 }
+
+generateInfoWindowContent(place: google.maps.places.PlaceResult, marker: google.maps.Marker): string {
+  let commerceDirection = place.formatted_address.split(',')[0];
+  const startWithLetter = /^[A-Z]/.test(commerceDirection);
+  const  hasNumber = /\d/.test(commerceDirection);
+  if (!startWithLetter || !hasNumber) {
+      commerceDirection = 'No disponible';
+  }
+  const commerceTitle = place.name;
+  this.placeSelected = place;
+  const content = '<div id="iw-container">' + '<div class="iw-title">' + commerceTitle + '</div>'
+                + '<div class="iw-subTitle">' + 'Dirección: <br> </div>'
+                + '<div class="iw-fieldInfo">' + commerceDirection + '</div></div>'
+                + '<ion-button expand="full" onclick="window.angularComponent.GoDetailGoogle(' +
+                ')">Ver perfil</ion-button>';
+                // '<h2 id="clickableItem"> Click me</h2>';
+  return content;
+}
+
 /*
 searchPlace(){
 

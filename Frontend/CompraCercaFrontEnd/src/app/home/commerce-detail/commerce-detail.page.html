@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title> {{activeGoogleCommerce.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+            <ion-content>
+              <ion-slides [options]="slideOpts" paginationType="progress">
+                  <ion-slide *ngFor="let photo of activeCommerceExtraInfo.googleImagesUrl">
+                      <ion-img [src]= "photo"> </ion-img>
+                  </ion-slide>
+              </ion-slides>
+        <ion-grid no-padding>
+        <ion-row>
+          <ion-col no-padding>
+              <ion-text color="dark">
+                  <h1 text-center> {{ activeGoogleCommerce.name }}</h1>
+                </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-list>
+              <ion-item>
+                  <ion-icon name="pin"></ion-icon>
+                  <h3>{{ activeGoogleCommerce.formatted_address }}</h3>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="keypad"></ion-icon>
+                  <h3>{{ activeGoogleCommerce.name }}</h3>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="planet"></ion-icon>
+                  <h3>{{ activeCommerceExtraInfo.website }}</h3>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="call"></ion-icon>
+                  <h3>{{ activeCommerceExtraInfo.phoneNumber }}</h3>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
