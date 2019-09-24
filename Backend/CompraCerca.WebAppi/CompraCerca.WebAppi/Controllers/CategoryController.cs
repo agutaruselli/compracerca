@@ -58,7 +58,7 @@ namespace CompraCerca.WebAppi.Controllers
         {
             try
             {
-                //CategoryService.initiateCategories();
+                CategoryService.initiateCategories();
                 return Ok();
             }
             catch (Exception ex)
