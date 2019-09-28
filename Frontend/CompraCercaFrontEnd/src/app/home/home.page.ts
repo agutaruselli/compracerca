@@ -110,6 +110,7 @@ export class HomePage implements OnDestroy, OnInit {
 GoDetailGoogle = (id: any) => { this.ngZone.run(() => {
   this.resultadosBusquedaService.setActiveGoogleCommerce(this.placeSelected);
   const commerceDetailParameters = this.placeSelected.id + this.separatorCharacter + 'Google';
+  this.router.navigate([], {queryParams: {categoryID: null}, queryParamsHandling: 'merge'});
   this.router.navigate(['/commerce-detail', commerceDetailParameters]) ;
 });
 }
@@ -331,11 +332,16 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
             return;
         }
         const categoryID = paramMap.get('categoryID');
-        this.categoriesService.getCategoryInfo(categoryID).subscribe( (res: CategoryResponse) => {
-          this.categorySearch = res;
-          console.log(res);
-          this.searchCategory(this.categorySearch.name);
-        });
+        const isnum = /^\d+$/.test(categoryID);
+        if (isnum) {
+          this.categoriesService.getCategoryInfo(categoryID).subscribe( (res: CategoryResponse) => {
+            this.categorySearch = res;
+            console.log(res);
+            this.searchCategory(this.categorySearch.name);
+            });
+        } else {
+          this.searchTexto(categoryID);
+        }
       });
       /*const marker = new MarkerWithLabel({
         map: this.map,
@@ -397,10 +403,44 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
         }
       });
   }
+  searchTexto(texto: string) {
+    this.limpiarMapa();
+    const valor = texto;
+    this.places = [];
+    const request = {
+      location: this.puntero,
+      radius: 5,
+      query: texto
+      };
+    const service = new google.maps.places.PlacesService(this.map);
+    service.textSearch(request, (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            this.getLocations(texto);
+            for (const result of results) {
+                const place = result;
+                //
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+
+                const coordenadas = new google.maps.LatLng(lat, lng);
+                if (this.cityCircle.getBounds().contains(coordenadas)
+                  && google.maps.geometry.spherical.computeDistanceBetween(this.cityCircle.getCenter(), coordenadas)
+                    <= this.cityCircle.getRadius()) {
+                      this.addMarker(place);
+                }
+            }
+            this.markerClusterer = new MarkerClusterer(this.map, this.markers, {
+              imagePath: 'assets/clusterimages/m'
+            });
+      }
+    }
+    );
+}
 
   searchText(textoLupa) {
     this.limpiarMapa();
-    const valor = textoLupa;
+    this.router.navigate(['/home', textoLupa.target.value]) ;
+    /*const valor = textoLupa;
     this.places = [];
     const request = {
       location: this.puntero,
@@ -430,10 +470,11 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
             });
       }
     }
-    );
+    );*/
 }
 
 searchCategory(categoryName: string) {
+
   this.limpiarMapa();
   this.places = [];
   const request = {

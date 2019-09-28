@@ -7,7 +7,7 @@ import { RouteGuardService } from './login/route-guard.service';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -18,6 +18,12 @@ const routes: Routes = [
   },
   {
     path: 'home/:categoryID',
+    loadChildren: './home/home.module#HomePageModule'
+    // ,
+    // canActivate: [RouteGuardService]
+  },
+  {
+    path: 'home/:textSearch',
     loadChildren: './home/home.module#HomePageModule'
     // ,
     // canActivate: [RouteGuardService]
@@ -67,7 +73,8 @@ const routes: Routes = [
   },
 
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'register', loadChildren: './login/register/register.module#RegisterPageModule' },  { path: 'dashboard-cc', loadChildren: './dashboard-cc/dashboard-cc.module#DashboardCCPageModule' }
+  { path: 'register', loadChildren: './login/register/register.module#RegisterPageModule' },
+  { path: 'dashboard-cc', loadChildren: './dashboard-cc/dashboard-cc.module#DashboardCCPageModule' }
 
 
 

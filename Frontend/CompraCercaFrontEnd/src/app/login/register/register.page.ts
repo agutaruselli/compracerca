@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { ToastController, AlertController } from '@ionic/angular';
 import { MenuController } from '@ionic/angular';
 
+
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -31,13 +33,17 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  onFormSubmit(form: NgForm) {
+  /*onFormSubmit(form: NgForm) {
     this.authService.register(form)
       .subscribe(_ => {
         this.presentAlert('Register Successfully', 'Please login with your new username and password');
       }, (err) => {
         console.log(err);
       });
+  }*/
+
+  onFormSubmit(form: NgForm) {
+      this.presentAlert('Register Successfully', 'Please login with your new username and password');
   }
 
   async presentToast(msg) {

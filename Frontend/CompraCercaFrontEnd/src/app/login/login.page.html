@@ -22,6 +22,12 @@
                   <ion-item lines="none">
                     <ion-button  full type="button" expand="full" size="default"  color="medium" (click)="register()">Register</ion-button>
                   </ion-item>
+
+                  <div class="centrado" *ngIf="showErrorMessage">
+                    <ion-item>
+                      <ion-label color="danger" position="center">El usuario y/o contrasena ingresados no es correcto</ion-label>
+                    </ion-item>
+                  </div>
                 <!-- </ion-card-content>
               </ion-card> -->
             </form>
