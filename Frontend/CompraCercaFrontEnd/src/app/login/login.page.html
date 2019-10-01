@@ -9,18 +9,18 @@
                 </ion-card-header>
                 <ion-card-content> -->
                   <ion-item>
-                    <ion-label position="floating">Username</ion-label>
+                    <ion-label position="floating">Nombre de usuario</ion-label>
                     <ion-input type="text" formControlName="username"></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-label position="floating">Password</ion-label>
+                    <ion-label position="floating">Contraseña</ion-label>
                     <ion-input type="password" formControlName="password"></ion-input>
                   </ion-item>
                   <ion-item lines="none" lines="full" padding-top>
-                    <ion-button  full expand="full" size="default" color="success" type="submit" [disabled]="!loginForm.valid">Login</ion-button>
+                    <ion-button  full expand="full" size="default" color="success" type="submit" [disabled]="!loginForm.valid">Ingresar</ion-button>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-button  full type="button" expand="full" size="default"  color="medium" (click)="register()">Register</ion-button>
+                    <ion-button  full type="button" expand="full" size="default"  color="medium" (click)="register()">Registro</ion-button>
                   </ion-item>
 
                   <div class="centrado" *ngIf="showErrorMessage">

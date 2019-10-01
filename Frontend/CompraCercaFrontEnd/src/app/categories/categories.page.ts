@@ -14,7 +14,7 @@ export class CategoriesPage implements OnInit {
   categoryImage: string ;
 
   constructor(private categoriesService: CategoriesService) {
-      this.categoryImage = 'assets/assets.png';
+      this.categoryImage = 'assets/chevron_right_24px_rounded.svg';
 
    }
   ngOnInit() {

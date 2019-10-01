@@ -8,6 +8,8 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
 import * as MarkerWithLabel from 'markerwithlabel';
+import { MenuController } from '@ionic/angular';
+
 
 import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
 
@@ -75,7 +77,8 @@ export class HomePage implements OnDestroy, OnInit {
 
 
   constructor(private resultadosBusquedaService: ResultadosBusquedaService, private activatedRoute: ActivatedRoute, 
-              private categoriesService: CategoriesService, public ngZone: NgZone, private router: Router ) {
+              private categoriesService: CategoriesService, public ngZone: NgZone, private router: Router
+              , public menuCtrl: MenuController ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
     (window as any).angularComponent = { GoDetailGoogle: this.GoDetailGoogle, GoDetailCompraCerca: this.GoDetailCompraCerca, zone: ngZone };
@@ -85,6 +88,7 @@ export class HomePage implements OnDestroy, OnInit {
   }
 
   ngOnInit()  {
+    this.menuCtrl.enable(true);
     this.initMap();
   }
 
