@@ -21,34 +21,51 @@ namespace CompraCerca.WebAppi.Controllers
 
         // GET api/Business/product
         [HttpGet("category/{id}")]
-        public IActionResult GetBusinessMatchFromCategories(int id)
+        public ActionResult GetBusinessMatchFromCategories(int id)
         {
-            List<Business> businesses = businessService.GetBusinessFromCategories(id).ToList();
-            List<BusinessDto> businessDtos = new List<BusinessDto>();
+            try
+            {
+                List<Business> businesses = businessService.GetBusinessFromCategories(id).ToList();
+                List<BusinessDto> businessDtos = new List<BusinessDto>();
 
-            foreach (Business business in businesses) {
-                BusinessDto businessDto = new BusinessDto();
+                foreach (Business business in businesses)
+                {
+                    BusinessDto businessDto = new BusinessDto();
 
-                businessDtos.Add(businessDto.GetBusinessDtoFromBusiness(business));
+                    businessDtos.Add(businessDto.GetBusinessDtoFromBusiness(business));
+                }
+
+                return Ok(businessDtos);
             }
+            catch (Exception ex)
+            {
 
-            return Ok(businessDtos);
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET api/Business/product
         [HttpGet("product/{product}")]
         public IActionResult GetBusinessMatchFromProduct(string product)
         {
-            List<Business> businesses = businessService.GetBusinessFromProduct(product).ToList();
-            List<BusinessDto> businessDtos = new List<BusinessDto>();
-
-            foreach (Business business in businesses)
+            try
             {
-                BusinessDto businessDto = new BusinessDto();
+                List<Business> businesses = businessService.GetBusinessFromProduct(product).ToList();
+                List<BusinessDto> businessDtos = new List<BusinessDto>();
 
-                businessDtos.Add(businessDto.GetBusinessDtoFromBusiness(business));
+                foreach (Business business in businesses)
+                {
+                    BusinessDto businessDto = new BusinessDto();
+
+                    businessDtos.Add(businessDto.GetBusinessDtoFromBusiness(business));
+                }
+                return Ok(businessDtos);
             }
-            return Ok(businessDtos);
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("init")]
@@ -56,8 +73,8 @@ namespace CompraCerca.WebAppi.Controllers
         {
             try
             {
-               // businessService.initiateBusiness();
-                return Ok();
+                businessService.initiateBusiness();
+                return Ok("Se iniciaron los datos correctamente");
             }
             catch (Exception ex)
             {

@@ -11,7 +11,7 @@ import * as MarkerWithLabel from 'markerwithlabel';
 import { MenuController } from '@ionic/angular';
 
 
-import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
+import 'C:/Users/amamchur.SOFT/Desktop/Tesis/compracerca/FrontEnd/CompraCercaFrontEnd/markerclusterer.js';
 
 declare const google: any;
 declare var MarkerClusterer: any;

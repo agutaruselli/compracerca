@@ -1,45 +1,62 @@
 ﻿using CompraCerca.Domain;
-using CompraCerca.WebServices.Interface;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace CompraCerca.WebServices
 {
-    public class PredictCategory : IPredictCategory
+    public static class PredictCategory
     {
-        private IPredictCategory predictCategory;
 
         // HttpClient is intended to be instantiated once per application, rather than per-use. See Remarks.
-        static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client = new HttpClient();
 
-        public PredictCategory(IPredictCategory predictCategory) {
-            this.predictCategory = predictCategory;
-        }
-
-        public PredictCategory()
+        public static async Task<Category> GetCategory(string product)
         {
-            this.predictCategory = new PredictCategory();
-        }
 
-        public Category GetCategory(string product)
-        {
-            
             // Call asynchronous network methods in a try/catch block to handle exceptions.
 
-                //HttpResponseMessage response = await client.GetAsync("http://www.contoso.com/");
-                //response.EnsureSuccessStatusCode();
-                //string responseBody = await response.Content.ReadAsStringAsync();
-                // Above three lines can be replaced with new helper method below
-                // string responseBody = await client.GetStringAsync(uri);
+            string query = "https://api.mercadolibre.com/sites/MLU/category_predictor/predict?title=" + product;
+            HttpResponseMessage response = await client.GetAsync(query);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
 
-               // Console.WriteLine(responseBody);
-                return new Category();
+            JObject result = JObject.Parse(responseBody);
+
+            string restultCategory = "";
+            foreach (JProperty prop in result.Properties())
+            {
+                if (prop.Name == "path_from_root")
+                {
+                    restultCategory = prop.Value.First.ToObject<ItemML>().name;
+                }
+            }
+
+            return new Category() { Name = restultCategory };
 
         }
+    }
 
-        public void Dispose()
-        {
-            predictCategory.Dispose();
-        }
+    public class PredictionML
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        Path_from_root path_from_root { get; set; }
+    }
+
+    [DataContract]
+    public class Path_from_root
+    {
+    }
+
+    public class ItemML
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public double prediction_probability { get; set; }
     }
 }

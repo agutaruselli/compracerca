@@ -26,13 +26,22 @@ namespace CompraCerca.WebAppi.Controllers
         [HttpGet("categories")]
         public IActionResult GetCategories()
         {
-            List<Category> categories =  CategoryService.GetCategories().ToList();
-            List<CategoryDto> categoriesDto = new List<CategoryDto>();
-            foreach (Category category in categories) {
-                CategoryDto categoryDto = new CategoryDto();
-                categoriesDto.Add(categoryDto.GetCategoryDtoFromCategory(category));
+            try
+            {
+                List<Category> categories = CategoryService.GetCategories().ToList();
+                List<CategoryDto> categoriesDto = new List<CategoryDto>();
+                foreach (Category category in categories)
+                {
+                    CategoryDto categoryDto = new CategoryDto();
+                    categoriesDto.Add(categoryDto.GetCategoryDtoFromCategory(category));
+                }
+                return Ok(categoriesDto);
             }
-            return Ok(categoriesDto);
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
 
@@ -42,14 +51,22 @@ namespace CompraCerca.WebAppi.Controllers
         [HttpGet("categories/{id}")]
         public IActionResult GetSubCategory(int id)
         {
-            List<Category> categories = CategoryService.GetSubCategories(id).ToList();
-            List<CategoryDto> categoriesDto = new List<CategoryDto>();
-            foreach (Category category in categories)
+            try
             {
-                CategoryDto categoryDto = new CategoryDto();
-                categoriesDto.Add(categoryDto.GetCategoryDtoFromCategory(category));
+                List<Category> categories = CategoryService.GetSubCategories(id).ToList();
+                List<CategoryDto> categoriesDto = new List<CategoryDto>();
+                foreach (Category category in categories)
+                {
+                    CategoryDto categoryDto = new CategoryDto();
+                    categoriesDto.Add(categoryDto.GetCategoryDtoFromCategory(category));
+                }
+                return Ok(categoriesDto);
             }
-            return Ok(categoriesDto);
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
 
@@ -58,7 +75,7 @@ namespace CompraCerca.WebAppi.Controllers
         {
             try
             {
-                CategoryService.initiateCategories();
+                //CategoryService.initiateCategories();
                 return Ok();
             }
             catch (Exception ex)
@@ -66,7 +83,7 @@ namespace CompraCerca.WebAppi.Controllers
 
                 return BadRequest(ex);
             }
-            
+
         }
     }
 }
