@@ -15,6 +15,10 @@ namespace CompraCerca.Domain
         public string Adress { get; set; }
         public int Telephone { get; set; }
         public string WebSite { get; set; }
-        public ICollection<Category> Categories { get; set; }
+        public List<Category> Categories { get; set; }
+
+        public Business() {
+            this.Categories = new List<Category>();
+        }
     }
 }

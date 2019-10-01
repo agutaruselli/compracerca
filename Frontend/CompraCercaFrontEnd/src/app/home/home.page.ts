@@ -9,7 +9,7 @@ import { CategoriesService } from '../categories/categories.service';
 import { CategoryResponse } from '../categories/categories.service';
 import * as MarkerWithLabel from 'markerwithlabel';
 
-import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
+import 'C:/Users/amamchur.SOFT/Desktop/Tesis/compracerca/FrontEnd/CompraCercaFrontEnd/markerclusterer.js';
 
 declare const google: any;
 declare var MarkerClusterer: any;
