@@ -71,66 +71,6 @@ namespace CompraCerca.BusinessLogic.Services
                 Telephone = 08006611,
                 WebSite = "No disponible"
             };
-            Business c = new Business()
-            {
-                Id = Guid.NewGuid(),
-                Adress = "Galicia 1377, 11100 Montevideo, Departamento de Montevideo",
-                Categories = new List<Category>() { new Category() { Id = 301 } },
-                Image = "",
-                Latitude = -34.899828,
-                Longitude = -56.186934,
-                Name = "Peluquería jessica valdivieso",
-                Telephone = 29018763,
-                WebSite = "No disponible"
-            };
-            Business c = new Business()
-            {
-                Id = Guid.NewGuid(),
-                Adress = "Cerro Largo 902, 11100 Montevideo, Departamento de Montevideo",
-                Categories = new List<Category>() { new Category() { Id = 302 } },
-                Image = "",
-                Latitude = -34.901501,
-                Longitude = -56.196597,
-                Name = "Rambona",
-                Telephone = 29082312,
-                WebSite = "No disponible"
-            };
-            Business c = new Business()
-            {
-                Id = Guid.NewGuid(),
-                Adress = "Convención 1352, 11100 Montevideo, Departamento de Montevideo",
-                Categories = new List<Category>() { new Category() { Id = 201 } },
-                Image = "",
-                Latitude = -34.905968,
-                Longitude = -56.197064,
-                Name = "Biciletas y accesorios",
-                Telephone = 29083232,
-                WebSite = "No disponible"
-            };
-            Business c = new Business()
-            {
-                Id = Guid.NewGuid(),
-                Adress = "Zelmar Michelini 1192, 11100 Montevideo, Departamento de Montevideo",
-                Categories = new List<Category>() { new Category() { Id = 601 }},
-                Image = "",
-                Latitude = -34.908876,
-                Longitude = -56.189884,
-                Name = "Rostiseria lo de tere",
-                Telephone = 29043232,
-                WebSite = "No disponible"
-            };
-            Business c = new Business()
-            {
-                Id = Guid.NewGuid(),
-                Adress = "Durazno 1102, 11100 Montevideo, Departamento de Montevideo",
-                Categories = new List<Category>() { new Category() { Id = 602 } },
-                Image = "",
-                Latitude = -34.910717,
-                Longitude = -56.191528,
-                Name = "Papeleria y fotocopias benteke",
-                Telephone = 29043232,
-                WebSite = "No disponible"
-            };
             Business d = new Business()
             {
                 Id = Guid.NewGuid(),
@@ -171,7 +111,7 @@ namespace CompraCerca.BusinessLogic.Services
             {
                 Id = Guid.NewGuid(),
                 Adress = "Zelmar Michelini 1192, 11100 Montevideo, Departamento de Montevideo",
-                Categories = new List<Category>() { new Category() { Id = 601 } },
+                Categories = new List<Category>() { new Category() { Id = 601 }},
                 Image = "",
                 Latitude = -34.908876,
                 Longitude = -56.189884,
@@ -191,6 +131,8 @@ namespace CompraCerca.BusinessLogic.Services
                 Telephone = 29043232,
                 WebSite = "No disponible"
             };
+           
+           
             List<Business> businesses = new List<Business>() { a, b, c, d,e,f,g,h};
             foreach (Business bsnessnew in businesses)
             {

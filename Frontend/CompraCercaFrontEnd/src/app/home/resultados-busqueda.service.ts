@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import {catchError} from 'rxjs/operators';
+
 
 
 export interface ItemResponse {
@@ -24,6 +25,10 @@ export class ResultadosBusquedaService {
 
   BASE_URL  = 'http://localhost:3000';
   LOCATIONS_URL = '/posts';
+
+  BASE_URL_BACKEND = 'https://localhost:44323/api/business/';
+  SEARCHCATEGORY_URL_BACKEND = 'category/';
+  SEARCHTEXT_URL_BACKEND2 = 'product/';
 
   activeGoogleCommerce: google.maps.places.PlaceResult;
   extraGoogleCommerce: google.maps.places.PlaceResult ;
@@ -86,10 +91,22 @@ export class ResultadosBusquedaService {
     return this.activeCompraCercaCommerce;
   }
   getLocations(textSearch: string): Observable<ItemResponse[]> {
-      return this.http.get<ItemResponse[]>(this.BASE_URL + this.LOCATIONS_URL).pipe(
+      const textTrim = textSearch.replace(/\s/g, '');
+      return this.http.get<ItemResponse[]>(this.BASE_URL + '/' + textTrim).pipe(
         catchError(this.handleError)
       );
   }
+  GetBusinessMatchFromCategories(categoryID: string): Observable<ItemResponse[]> {
+    return this.http.get<ItemResponse[]>(this.BASE_URL_BACKEND + this.SEARCHCATEGORY_URL_BACKEND + categoryID).pipe(
+      catchError(this.handleError)
+    );
+  }
+  GetBusinessMatchFromText(textSearch: string): Observable<ItemResponse[]> {
+    return this.http.get<ItemResponse[]>(this.BASE_URL_BACKEND + this.SEARCHTEXT_URL_BACKEND2 + textSearch).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

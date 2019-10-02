@@ -34,7 +34,11 @@ export class CommerceDetailPage implements OnInit {
 
   }
   ngOnInit() {
+        
         this.activeCommerceExtraInfo = this.route.snapshot.data['commerce'];
+        if(this.resultadosBusquedaService.activeGoogleCommerce != null) {
+          this.activeCommerceExtraInfo.adress = this.resultadosBusquedaService.activeGoogleCommerce.formatted_address.split(',')[0];
+         }
         console.log(this.activeCommerceExtraInfo);
   }
 

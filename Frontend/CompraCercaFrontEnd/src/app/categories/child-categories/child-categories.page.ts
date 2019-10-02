@@ -22,6 +22,7 @@ export class ChildCategoriesPage implements OnInit {
         const categoryID = paramMap.get('categoryID');
         this.categoriesService.getCategoryInfo(categoryID).subscribe( (res: CategoryResponse) => {
           this.parentCategory = res;
+          this.parentCategory.name = unescape(this.parentCategory.name);
           console.log(res);
         });
 

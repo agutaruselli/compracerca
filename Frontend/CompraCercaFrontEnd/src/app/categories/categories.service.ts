@@ -26,6 +26,8 @@ export class CategoriesService {
 
   LOCATION_ID = 1;
 
+  activeCategory: CategoryResponse;
+
 
   constructor(private http: HttpClient) {
 

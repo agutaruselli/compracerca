@@ -4,69 +4,120 @@
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXByIiwiYXVkIjoid2ViIiwiZXhwIjoxNTE2NzQ2MDc4LCJpYXQiOjE1MTY3NDQyNzh9.6YXWX72UP9_U9DPmT8c-_DQRDwY_TL0DEdsBaBqoaLf8iK0qHNctyBTbFO5ktUJMTubVOj6D7pFOEyEuV8lhjA"
     }
 ],
-"posts": [
+"peluquerias": [
     {
-     "lat": -34.886298,
-     "lng": -56.118325,
+     "lat": -34.899828,
+     "lng": -56.186934,
+     "image": "assets/peluquerias.jpg",
+     "name": "Peluqueria Jessica Valdiviesso",
+     "adress": "Galicia 1352",
+     "website": "No disponible",
+     "postalCode": "AR1223, Montevideo Uruguay",
+     "phoneNumber": "29083212"
+    }
+],
+"papelerias": [
+    {
+     "lat": -34.9093764,
+     "lng": -56.1888006,
      "image": "assets/commerceIMGs/papelerÃ­a-y-libros.jpg",
-     "name": "Lugar mock 1",
-     "adress": "18 de julio 1923",
-     "website": "www.mock1.com.uy",
+     "name": "Papeleria Benteke",
+     "adress": "Carlos Quijano 1151",
+     "website": "No disponible",
      "postalCode": "AR1223, Montevideo Uruguay",
      "phoneNumber": "098 337 534"
     },
     {
-      "lat": -59.891598,
-      "lng": -56.118542,
-      "image": "assets/commerceIMGs/Levis-store.jpg",
-      "name": "Lugar mock 2",
-      "adress": "Goes 2312",
-      "website": "www.mock2.com.uy",
-      "postalCode": "AR126345, Montevideo Uruguay",
-      "phoneNumber": "098 337 534"
-     },
-     {
-      "lat": -34.910883,
-      "lng": -56.149197,
-      "image": "assets/commerceIMGs/bar-store.jpg",
-      "name": "Lugar mock 3",
-      "adress": "Amazonas 1580",
-      "website": "www.mock3.com.uy",
-      "postalCode": "AR122352, Montevideo Uruguay",
-      "phoneNumber": "098 337 534"
-  	}
+     "lat": -34.8527461,
+     "lng": -56.1726132,
+     "image": "assets/commerceIMGs/papelerÃ­a-y-libros.jpg",
+     "name": "Papeleria Benteke",
+     "adress": "Carlos Quijano 1151",
+     "website": "No disponible",
+     "postalCode": "AR1223, Montevideo Uruguay",
+     "phoneNumber": "098 337 534"
+    }
 ],
+"rotiserias": [
+    {
+     "lat": -34.9045958,
+     "lng": -56.1946967,
+     "image": "assets/rotiserias.jpg",
+     "name": "Lo de Tere",
+     "adress": "Julio Herrera y Obes 1446",
+     "website": "No disponible",
+     "postalCode": "AR1223, Montevideo Uruguay",
+     "phoneNumber": "098 337 534"
+    }
+],
+"Accesoriosparacelulares": [
+    {
+     "lat": -34.903768,
+     "lng": -56.189337,
+     "image": "assets/accesorioscelulares.jpg",
+     "name": "DrPhone",
+     "adress": "Mercedes 1923",
+     "website": "www.facebook.com/drphoneuy",
+     "postalCode": "AR1223, Montevideo Uruguay",
+     "phoneNumber": "098 337 534"
+    }
 
+]
+,
+"Accesoriosparaautosycamionetas": [
+    {
+     "lat": -34.903221,
+     "lng": -56.194016,
+     "image": "assets/repuestosautosycamionetas.jpg",
+     "name": "Uruguay repuestos y accesorios",
+     "adress": "Avda Uruguay 1050",
+     "website": "www.suautorepuestos.com.uy",
+     "postalCode": "AR1223, Montevideo Uruguay",
+     "phoneNumber": "098 431 034"
+    }
+
+]
+,
+"tintorerias": [
+    {
+     "lat": -34.9031663,
+     "lng": -56.1945183,
+     "image": "assets/tintorerias.jpg",
+     "name": "Tintoreria Daniel",
+     "adress": "Avda Uruguay 1120",
+     "website": "No disponible",
+     "postalCode": "AR1223, Montevideo Uruguay",
+     "phoneNumber": "099 115 500"
+    }
+
+],
 "categories": [
-  {
-   "father": null,
-   "id": 1,
-   "name": "Automoviles"
-  },
-  {
-   "father": null,
-   "id": 2,
-   "name": "Electrodomesticos"
-   },
-   {
-    "father": null,
-    "id": 3,
-    "name": "Restaurantes"
-   },
-   {
-    "father": null,
-    "id": 4,
-    "name": "Tintorerias"
-   },
-   {
-    "father": null,
-    "id": 101,
-    "name": "Vidrierias"
-   },
-   {
-    "father": null,
-    "id": 102,
-    "name": "Whiskerias"
-   }
+{"father": null,"id": 1,"name": "Tecnologia"},
+{"father": null,"id": 101,"name": "Celulares y telefonía"},
+{"father": null,"id": 102,"name": "Accesorios para celulares"},
+
+{"father": null,"id": 2,"name": "Accesorios para vehiculos"},
+{"father": null,"id": 201,"name": "Accesorios para motos"},
+{"father": null,"id": 202,"name": "Accesorios para autos y camionetas"},
+
+{"father": null,"id": 3,"name": "Salud y belleza"},
+{"father": null,"id": 301,"name": "Tratamientos de belleza"},
+{"father": null,"id": 302,"name": "Artículos de peluquería"},
+
+{"father": null,"id": 4,"name": "Deportes y aire libre"},
+{"father": null,"id": 401,"name": "Bicicletas"},
+{"father": null,"id": 402,"name": "Accesorios de bicicletas"},
+
+{"father": null, "id": 5,"name": "Hogar y electrodomesticos"},
+{"father": null, "id": 501,"name": "Refrigeración"},
+{"father": null, "id": 502,"name": "Climatización"},
+
+{"father": null,"id": 6,"name": "Herramientas e industrias"},
+{"father": null,"id": 601,"name": "Industria gastronómica"},
+{"father": null,"id": 602,"name": "Equipamiento para oficinas"},
+
+{"father": null,"id": 7,"name": "Juguetes y bebes"},
+{"father": null,"id": 701,"name": "Ropa de bebe"},
+{"father": null,"id": 702,"name": "Juegos y juguetes para bebés"}
 ]
 }

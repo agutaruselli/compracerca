@@ -11,7 +11,7 @@ import * as MarkerWithLabel from 'markerwithlabel';
 import { MenuController } from '@ionic/angular';
 
 
-import 'C:/Users/amamchur.SOFT/Desktop/Tesis/compracerca/FrontEnd/CompraCercaFrontEnd/markerclusterer.js';
+import 'C:/Users/thiago/Documents/GitHub/compracerca/Frontend/CompraCercaFrontEnd/markerclusterer.js';
 
 declare const google: any;
 declare var MarkerClusterer: any;
@@ -136,6 +136,10 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
         zoom: 15,
         styles:  [
           {
+            featureType: "transit.station.bus",
+            stylers:  [{ "visibility": "off" }]
+          },
+          {
               'featureType': 'landscape.natural',
               'elementType': 'geometry.fill',
               'stylers': [
@@ -188,7 +192,7 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
               'elementType': 'labels',
               'stylers': [
                   {
-                      'visibility': 'on'
+                      'visibility': 'off'
                   }
               ]
           },
@@ -197,7 +201,7 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
               'elementType': 'labels.text',
               'stylers': [
                   {
-                      'visibility': 'on'
+                      'visibility': 'off'
                   }
               ]
           },
@@ -206,7 +210,7 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
               'elementType': 'labels.icon',
               'stylers': [
                   {
-                      'visibility': 'on'
+                      'visibility': 'off'
                   }
               ]
           },
@@ -290,7 +294,7 @@ GoDetailCompraCerca = (id: any) => { this.ngZone.run(() => {
               'elementType': 'geometry',
               'stylers': [
                   {
-                      'visibility': 'on'
+                      'visibility': 'off'
                   },
                   {
                       'lightness': 700
